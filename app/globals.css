@@ -1,26 +1,182 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ── Font Face Declarations ── */
+@font-face {
+  font-family: 'Cabinet Grotesk';
+  src: url('/fonts/CabinetGrotesk-Extrabold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NDot55';
+  src: url('/fonts/Ndot55Caps-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Design Tokens ── */
+@theme {
+  /* Colors — light mode */
+  --color-bg:             #F5F0E8;
+  --color-bg-elevated:    #EDE8DF;
+  --color-bg-subtle:      #E8E2D8;
+  --color-text-primary:   #1A1814;
+  --color-text-secondary: #6B6560;
+  --color-text-muted:     #A8A39D;
+  --color-nothing-blue:   #3B8BEB;
+  --color-nothing-red:    #E63329;
+  --color-border:         rgba(26, 24, 20, 0.08);
+  --color-border-strong:  rgba(26, 24, 20, 0.16);
+  --dot-color:            rgba(26, 24, 20, 0.05);
+
+  /* Fonts */
+  --font-display: 'Cabinet Grotesk', sans-serif;
+  --font-body:    'Satoshi', sans-serif;
+  --font-mono:    'Geist Mono', 'Space Mono', monospace;
+  --font-accent:  'NDot55', monospace;
+}
+
+/* ── Dark Mode ── */
+[data-theme="dark"] {
+  --color-bg:             #0F0E0C;
+  --color-bg-elevated:    #181612;
+  --color-bg-subtle:      #201E1B;
+  --color-text-primary:   #F0EBE3;
+  --color-text-secondary: #8A8480;
+  --color-text-muted:     #4A4640;
+  --color-border:         rgba(240, 235, 227, 0.08);
+  --color-border-strong:  rgba(240, 235, 227, 0.16);
+  --dot-color:            rgba(240, 235, 227, 0.04);
+}
+
+/* ── Base Resets ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg);
+  background-image: radial-gradient(
+    circle,
+    var(--dot-color) 1px,
+    transparent 1px
+  );
+  background-size: 28px 28px;
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 400ms ease, color 400ms ease;
+  cursor: none;
+}
+
+/* Restore cursor on touch devices */
+@media (hover: none) {
+  body { cursor: auto; }
+}
+
+/* ── Lenis ── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-nothing-blue);
+}
+
+/* ── Focus ── */
+:focus-visible {
+  outline: 2px solid var(--color-nothing-blue);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Utility Classes ── */
+.font-display { font-family: var(--font-display); }
+.font-body    { font-family: var(--font-body); }
+.font-mono    { font-family: var(--font-mono); }
+.font-accent  { font-family: var(--font-accent); }
+
+.text-primary   { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-muted     { color: var(--color-text-muted); }
+.text-blue      { color: var(--color-nothing-blue); }
+.text-red       { color: var(--color-nothing-red); }
+
+.bg-base     { background-color: var(--color-bg); }
+.bg-elevated { background-color: var(--color-bg-elevated); }
+.bg-subtle   { background-color: var(--color-bg-subtle); }
+
+.border-default { border-color: var(--color-border); }
+.border-strong  { border-color: var(--color-border-strong); }
+
+/* Warm glass card */
+.glass-warm {
+  background: rgba(245, 240, 232, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+}
+
+[data-theme="dark"] .glass-warm {
+  background: rgba(24, 22, 18, 0.8);
 }
