@@ -180,3 +180,28 @@ html.lenis body {
 [data-theme="dark"] .glass-warm {
   background: rgba(24, 22, 18, 0.8);
 }
+
+@keyframes float1 {
+  0%, 100% { transform: translateY(0px) rotate(-8deg); }
+  50% { transform: translateY(-12px) rotate(-8deg); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translateY(0px) rotate(8deg); }
+  50% { transform: translateY(-10px) rotate(8deg); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translateY(0px) rotate(6deg); }
+  50% { transform: translateY(-14px) rotate(6deg); }
+}
+
+@keyframes float4 {
+  0%, 100% { transform: translateY(0px) rotate(2deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

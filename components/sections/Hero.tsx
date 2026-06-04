@@ -7,7 +7,9 @@ import PhoneObject from "@/components/ui/PhoneObject"
 import VinylObject from "@/components/ui/VinylObject"
 import LaptopObject from "@/components/ui/LaptopObject"
 import PolaroidStack from "@/components/ui/PolaroidStack"
-import TerminalSnippet from "@/components/ui/TerminalSnippet"
+import CamObject from "@/components/ui/CamObject"
+import HopeObject from "@/components/ui/HopeObject"
+
 
 interface HeroProps {
   loaderDone: boolean
@@ -48,7 +50,8 @@ export default function Hero({ loaderDone }: HeroProps) {
           <VinylObject />
           <LaptopObject />
           <PolaroidStack />
-          <TerminalSnippet />
+          <CamObject />
+          <HopeObject />
         </div>
       )}
 
