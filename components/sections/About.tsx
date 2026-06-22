@@ -1,286 +1,143 @@
 "use client"
 
-import { useRef, useState, useCallback, useEffect } from "react"
+import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
+import Image from "next/image"
 import { SPRING_SMOOTH } from "@/lib/animation"
-
-const COMMANDS: Record<string, string> = {
-  whoami: `saurav g.c.
-→ cs student. builder. kathmandu-based.
-→ i turn ideas into things you can click.
-→ always in "let me try this" mode.`,
-
-  "ls interests/": `music/        ai-ml/        photography/
-open-source/  design/       breaking-bad/`,
-
-  "cat stack.txt": `languages  → typescript, python, java
-frontend   → next.js, react, tailwind, framer-motion
-backend    → node.js, fastapi, postgresql
-tools      → git, docker, vercel, figma`,
-
-  help: `available commands:
-  whoami          → who is this guy
-  ls interests/   → things i care about
-  cat stack.txt   → tech i work with
-  help            → you're looking at it
-  clear           → clean slate`,
-}
-
-const AUTOCOMPLETE_KEYS = Object.keys(COMMANDS)
-
-interface HistoryItem {
-  cmd: string
-  output: string
-  displayed: string
-  done: boolean
-}
 
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
-  const bottomRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(sectionRef, { once: true, amount: 0.2 })
-
-  const [history, setHistory] = useState<HistoryItem[]>([
-    { cmd: "", output: 'type "help" to see available commands.', displayed: 'type "help" to see available commands.', done: true },
-  ])
-  const [input, setInput] = useState("")
-  const [cmdHistory, setCmdHistory] = useState<string[]>([])
-  const [historyIndex, setHistoryIndex] = useState(-1)
-  const [isTyping, setIsTyping] = useState(false)
-
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [history])
-
-  const typeOutput = useCallback((output: string, targetIndex: number) => {
-    setIsTyping(true)
-    let i = 0
-    const interval = setInterval(() => {
-      i++
-      setHistory(prev => {
-        const next = [...prev]
-        if (next[targetIndex]) {
-          next[targetIndex] = {
-            ...next[targetIndex],
-            displayed: output.slice(0, i),
-            done: i >= output.length,
-          }
-        }
-        return next
-      })
-      if (i >= output.length) {
-        clearInterval(interval)
-        setIsTyping(false)
-      }
-    }, 12)
-  }, [])
-
-  const handleSubmit = useCallback(() => {
-    if (!input.trim() || isTyping) return
-    const cmd = input.trim().toLowerCase()
-    setInput("")
-    setCmdHistory(prev => [cmd, ...prev])
-    setHistoryIndex(-1)
-
-    if (cmd === "clear") {
-      setHistory([])
-      return
-    }
-
-    const output = COMMANDS[cmd] ?? `command not found: ${cmd}\ntype "help" for available commands.`
-    const newItem: HistoryItem = { cmd, output, displayed: "", done: false }
-
-    setHistory(prev => {
-      const next = [...prev, newItem]
-      const newIndex = next.length - 1
-      setTimeout(() => typeOutput(output, newIndex), 30)
-      return next
-    })
-  }, [input, isTyping, typeOutput])
-
-  function handleKeyDown(e: React.KeyboardEvent) {
-    if (e.key === "Enter") {
-      handleSubmit()
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault()
-      const next = Math.min(historyIndex + 1, cmdHistory.length - 1)
-      setHistoryIndex(next)
-      setInput(cmdHistory[next] ?? "")
-    } else if (e.key === "ArrowDown") {
-      e.preventDefault()
-      const next = Math.max(historyIndex - 1, -1)
-      setHistoryIndex(next)
-      setInput(next === -1 ? "" : cmdHistory[next])
-    } else if (e.key === "Tab") {
-      e.preventDefault()
-      const match = AUTOCOMPLETE_KEYS.find(k => k.startsWith(input))
-      if (match) setInput(match)
-    }
-  }
-
-  // last item done = show new prompt
-  const lastDone = history.length === 0 || history[history.length - 1].done
 
   return (
     <section
       ref={sectionRef}
       id="about"
+      className="section-about"
       style={{
         width: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "80px 60px",
+        padding: "120px 60px",
+        position: "relative",
       }}
     >
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-        transition={{ delay: 0.1, ...SPRING_SMOOTH }}
-        style={{ width: "100%", maxWidth: "820px" }}
-      >
-        <p style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "11px",
-          color: "var(--color-text-muted)",
-          letterSpacing: "0.15em",
-          textTransform: "uppercase",
-          marginBottom: "20px",
-        }}>
-          01 / about
-        </p>
-
-        {/* Terminal */}
-        <div
-          onClick={() => inputRef.current?.focus()}
-          style={{
-            backgroundColor: "#1a1814",
-            borderRadius: "10px",
-            overflow: "hidden",
+      <div style={{
+        width: "100%",
+        maxWidth: "1100px",
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "80px",
+        alignItems: "center",
+      }}>
+        {/* Left — Intro */}
+        <motion.div
+          initial={{ opacity: 0, x: -24 }}
+          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -24 }}
+          transition={{ delay: 0.1, ...SPRING_SMOOTH }}
+        >
+          <p style={{
             fontFamily: "var(--font-mono)",
-            fontSize: "13px",
-            cursor: "text",
-            boxShadow: "0 32px 64px rgba(26,24,20,0.22)",
-            border: "1px solid rgba(255,255,255,0.06)",
+            fontSize: "11px",
+            color: "var(--color-copper)",
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            marginBottom: "20px",
+          }}>
+            whoami
+          </p>
+
+          <h2 style={{
+            fontFamily: "var(--font-display)",
+            fontWeight: 800,
+            fontSize: "clamp(36px, 5vw, 64px)",
+            color: "var(--color-text-primary)",
+            letterSpacing: "-0.03em",
+            lineHeight: 0.95,
+            margin: "0 0 24px",
+          }}>
+            Saurav G.C.
+          </h2>
+
+          <p style={{
+            fontFamily: "var(--font-body)",
+            fontWeight: 300,
+            fontSize: "18px",
+            lineHeight: 1.75,
+            color: "var(--color-text-secondary)",
+            maxWidth: "42ch",
+          }}>
+            CS student based in Kathmandu, Nepal. I build things that work — 
+            full-stack apps, ML pipelines, and the occasional open source PR. 
+            I care about craft, how clearly things communicate, and systems 
+            that scale. Always in &quot;let me try this&quot; mode.
+          </p>
+
+          <div style={{
             display: "flex",
-            flexDirection: "column",
+            gap: "12px",
+            marginTop: "32px",
+            flexWrap: "wrap",
+          }}>
+            {["Python", "TypeScript", "React", "FastAPI", "PostgreSQL", "Docker"].map((tech) => (
+              <span key={tech} style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "10px",
+                letterSpacing: "0.06em",
+                padding: "5px 12px",
+                borderRadius: "100px",
+                border: "1px solid var(--color-border-strong)",
+                color: "var(--color-text-secondary)",
+              }}>
+                {tech}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Right — Photo card */}
+        <motion.div
+          initial={{ opacity: 0, x: 24 }}
+          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 24 }}
+          transition={{ delay: 0.2, ...SPRING_SMOOTH }}
+          style={{
+            position: "relative",
+            width: "100%",
+            aspectRatio: "3/4",
+            maxWidth: "360px",
+            marginLeft: "auto",
+            borderRadius: "12px",
+            overflow: "hidden",
+            boxShadow: "0 24px 64px rgba(28,24,20,0.18)",
           }}
         >
-          {/* Title bar */}
+          <Image
+            src="/images/cam.png"
+            alt="Saurav G.C."
+            fill
+            style={{ objectFit: "cover" }}
+            sizes="360px"
+          />
           <div style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-            padding: "14px 18px",
-            borderBottom: "1px solid rgba(255,255,255,0.05)",
-            backgroundColor: "rgba(0,0,0,0.25)",
-            flexShrink: 0,
-          }}>
-            <div style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: "#FF5F57" }} />
-            <div style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: "#FFBD2E" }} />
-            <div style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: "#28C840" }} />
-            <span style={{
-              marginLeft: "auto",
-              fontSize: "12px",
-              color: "rgba(255,255,255,0.28)",
-              letterSpacing: "0.04em",
-            }}>
-              saurav@ktm — zsh
-            </span>
-          </div>
-
-          {/* Scrollable content */}
-          <div style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
             padding: "20px",
-            overflowY: "auto",
-            maxHeight: "480px",
-            minHeight: "440px",
-            lineHeight: 1.75,
+            background: "linear-gradient(transparent, rgba(20,18,16,0.6))",
           }}>
-            {/* History */}
-            {history.map((item, i) => (
-              <div key={i} style={{ marginBottom: "6px" }}>
-                {/* Command line */}
-                {item.cmd && (
-                  <div style={{ display: "flex", gap: "8px", alignItems: "center", marginBottom: "4px" }}>
-                    <span style={{ color: "#28C840", fontSize: "12px", flexShrink: 0 }}>→</span>
-                    <span style={{ color: "#3B8BEB" }}>saurav@ktm</span>
-                    <span style={{ color: "rgba(255,255,255,0.3)" }}>~</span>
-                    <span style={{ color: "rgba(245,240,232,0.9)" }}>{item.cmd}</span>
-                  </div>
-                )}
-                {/* Output */}
-                {item.displayed && (
-                  <pre style={{
-                    margin: "0 0 10px",
-                    paddingLeft: item.cmd ? "20px" : "0",
-                    whiteSpace: "pre-wrap",
-                    color: "rgba(245,240,232,0.65)",
-                    fontSize: "13px",
-                    fontFamily: "var(--font-mono)",
-                  }}>
-                    {item.displayed}
-                    {!item.done && (
-                      <span style={{
-                        display: "inline-block",
-                        width: "2px",
-                        height: "14px",
-                        backgroundColor: "#3B8BEB",
-                        marginLeft: "2px",
-                        verticalAlign: "middle",
-                        animation: "blink 1s step-end infinite",
-                      }} />
-                    )}
-                  </pre>
-                )}
-              </div>
-            ))}
-
-            {/* Input prompt — only shown when last item is done typing */}
-            {lastDone && (
-              <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-                <span style={{ color: "#28C840", fontSize: "12px", flexShrink: 0 }}>→</span>
-                <span style={{ color: "#3B8BEB" }}>saurav@ktm</span>
-                <span style={{ color: "rgba(255,255,255,0.3)" }}>~</span>
-                <div style={{ flex: 1, position: "relative" }}>
-                  <input
-                    ref={inputRef}
-                    value={input}
-                    onChange={e => setInput(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    autoFocus
-                    spellCheck={false}
-                    autoComplete="off"
-                    style={{
-                      width: "100%",
-                      background: "transparent",
-                      border: "none",
-                      outline: "none",
-                      color: "rgba(245,240,232,0.92)",
-                      fontFamily: "var(--font-mono)",
-                      fontSize: "13px",
-                      caretColor: "#3B8BEB",
-                    }}
-                  />
-                </div>
-              </div>
-            )}
-
-            <div ref={bottomRef} />
+            <p style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "10px",
+              color: "rgba(255,255,255,0.7)",
+              letterSpacing: "0.1em",
+            }}>
+              kathmandu · nepal
+            </p>
           </div>
-        </div>
-
-        <p style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "11px",
-          color: "var(--color-text-muted)",
-          marginTop: "12px",
-          letterSpacing: "0.06em",
-        }}>
-          try: whoami · ls interests/ · cat stack.txt · help
-        </p>
-      </motion.div>
+        </motion.div>
+      </div>
     </section>
   )
 }

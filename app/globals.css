@@ -44,17 +44,18 @@
 /* ── Design Tokens ── */
 @theme {
   /* Colors — light mode */
-  --color-bg:             #F5F0E8;
-  --color-bg-elevated:    #EDE8DF;
-  --color-bg-subtle:      #E8E2D8;
-  --color-text-primary:   #1A1814;
-  --color-text-secondary: #6B6560;
-  --color-text-muted:     #A8A39D;
+  --color-bg:             #F7F5F2;
+  --color-bg-elevated:    #EFECE8;
+  --color-bg-subtle:      #E7E3DD;
+  --color-text-primary:   #1C1A16;
+  --color-text-secondary: #5E5852;
+  --color-text-muted:     #8E8880;
+  --color-copper:         #C97D5A;
   --color-nothing-blue:   #3B8BEB;
-  --color-nothing-red:    #E63329;
-  --color-border:         rgba(26, 24, 20, 0.08);
-  --color-border-strong:  rgba(26, 24, 20, 0.16);
-  --dot-color:            rgba(26, 24, 20, 0.05);
+  --color-accent-red:     #D94A3A;
+  --color-border:         rgba(28, 24, 20, 0.08);
+  --color-border-strong:  rgba(28, 24, 20, 0.15);
+  --dot-color:            rgba(28, 24, 20, 0.04);
 
   /* Fonts */
   --font-display: 'Cabinet Grotesk', sans-serif;
@@ -65,15 +66,80 @@
 
 /* ── Dark Mode ── */
 [data-theme="dark"] {
-  --color-bg:             #0F0E0C;
-  --color-bg-elevated:    #181612;
-  --color-bg-subtle:      #201E1B;
-  --color-text-primary:   #F0EBE3;
-  --color-text-secondary: #8A8480;
-  --color-text-muted:     #4A4640;
-  --color-border:         rgba(240, 235, 227, 0.08);
-  --color-border-strong:  rgba(240, 235, 227, 0.16);
-  --dot-color:            rgba(240, 235, 227, 0.04);
+  --color-bg:             #141210;
+  --color-bg-elevated:    #1C1A18;
+  --color-bg-subtle:      #242220;
+  --color-text-primary:   #EDE8E0;
+  --color-text-secondary: #A09A94;
+  --color-text-muted:     #6A6660;
+  --color-copper:         #D48E6E;
+  --color-nothing-blue:   #5B9BEB;
+  --color-accent-red:     #E0695A;
+  --color-border:         rgba(235, 230, 222, 0.08);
+  --color-border-strong:  rgba(235, 230, 222, 0.15);
+  --dot-color:            rgba(235, 230, 222, 0.04);
+}
+
+/* ── Section Atmosphere ── */
+
+.section-hero {
+  background-color: var(--color-bg);
+  transition: background-color 400ms ease;
+}
+.section-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 55% at 50% 45%, var(--color-copper) 0%, transparent 65%);
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+}
+[data-theme="dark"] .section-hero::before {
+  opacity: 0.10;
+}
+.section-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 40% 30% at 50% 85%, var(--color-copper) 0%, transparent 100%);
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.section-about {
+  background-color: var(--color-bg-elevated);
+  transition: background-color 400ms ease;
+}
+
+.section-work {
+  background-color: var(--color-bg-subtle);
+  transition: background-color 400ms ease;
+}
+
+.section-connect {
+  background-color: var(--color-bg);
+  transition: background-color 400ms ease;
+}
+.section-connect::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 30%, var(--color-copper) 100%);
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+[data-theme="dark"] .section-connect::before {
+  opacity: 0.06;
+}
+
+/* Section divider — thin decorative line between sections */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--color-border-strong) 20%, var(--color-border-strong) 80%, transparent 100%);
 }
 
 /* ── Base Resets ── */
@@ -158,8 +224,9 @@ html.lenis body {
 .text-primary   { color: var(--color-text-primary); }
 .text-secondary { color: var(--color-text-secondary); }
 .text-muted     { color: var(--color-text-muted); }
+.text-copper    { color: var(--color-copper); }
 .text-blue      { color: var(--color-nothing-blue); }
-.text-red       { color: var(--color-nothing-red); }
+.text-accent-red { color: var(--color-accent-red); }
 
 .bg-base     { background-color: var(--color-bg); }
 .bg-elevated { background-color: var(--color-bg-elevated); }
@@ -170,7 +237,7 @@ html.lenis body {
 
 /* Warm glass card */
 .glass-warm {
-  background: rgba(245, 240, 232, 0.8);
+  background: rgba(240, 236, 230, 0.8);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid var(--color-border);
@@ -178,7 +245,7 @@ html.lenis body {
 }
 
 [data-theme="dark"] .glass-warm {
-  background: rgba(24, 22, 18, 0.8);
+  background: rgba(26, 24, 22, 0.8);
 }
 
 @keyframes float1 {

@@ -24,6 +24,7 @@ export default function Hero({ loaderDone }: HeroProps) {
     <section
       ref={sectionRef}
       id="hero"
+      className="section-hero"
       style={{
         position: "relative",
         width: "100%",
@@ -69,6 +70,32 @@ export default function Hero({ loaderDone }: HeroProps) {
           gap: "16px",
         }}
       >
+
+        {/* Terminal prompt header */}
+        {loaderDone && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.5, ease: EASE_OUT_EXPO }}
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "12px",
+              color: "var(--color-text-muted)",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              marginBottom: "24px",
+              padding: "6px 14px",
+              borderRadius: "6px",
+              backgroundColor: "var(--color-bg-elevated)",
+              border: "1px solid var(--color-border)",
+            }}
+          >
+            <span style={{ color: "var(--color-nothing-blue)" }}>saurav@ktm</span>
+            <span style={{ color: "var(--color-text-muted)" }}>—</span>
+            <span style={{ color: "var(--color-copper)" }}>~</span>
+          </motion.div>
+        )}
 
         {/* Greeting */}
         {loaderDone && (

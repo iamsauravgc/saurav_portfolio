@@ -18,11 +18,11 @@ export default function Navbar() {
 
   const navBgLight = useTransform(
     scrollY, [0, 80],
-    ["rgba(245,240,232,0)", "rgba(245,240,232,0.88)"]
+    ["rgba(240,236,230,0)", "rgba(240,236,230,0.88)"]
   )
   const navBgDark = useTransform(
     scrollY, [0, 80],
-    ["rgba(15,14,12,0)", "rgba(15,14,12,0.88)"]
+    ["rgba(18,16,14,0)", "rgba(18,16,14,0.88)"]
   )
   const navBlur = useTransform(scrollY, [0, 80], [0, 12])
   const navBorderOpacity = useTransform(scrollY, [0, 80], [0, 1])
@@ -53,7 +53,7 @@ export default function Navbar() {
               border: "1px solid",
               borderColor: useTransform(
                 navBorderOpacity,
-                (v) => `rgba(26,24,20,${v * 0.08})`
+                (v) => `rgba(28,24,20,${v * 0.08})`
               ),
               padding: "0 24px",
               height: "52px",
@@ -86,7 +86,7 @@ export default function Navbar() {
                   ease: "easeInOut",
                 }}
                 style={{
-                  color: "var(--color-nothing-red)",
+                  color: "var(--color-accent-red)",
                   fontSize: "8px",
                   lineHeight: 1,
                 }}

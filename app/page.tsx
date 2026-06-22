@@ -10,6 +10,7 @@ import Footer from "@/components/layout/Footer"
 import Hero from "@/components/sections/Hero"
 import About from "@/components/sections/About" 
 import Work from "@/components/sections/Work"
+import Connect from "@/components/sections/Connect"
 
 
 export default function Home() {
@@ -38,8 +39,12 @@ export default function Home() {
         <Navbar />
         <main>
           <Hero loaderDone={loaderDone} />
+          <div className="section-divider" />
           <About />
+          <div className="section-divider" />
           <Work />
+          <div className="section-divider" />
+          <Connect />
         </main>
         <Footer />
       </div>

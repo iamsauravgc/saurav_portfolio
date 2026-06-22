@@ -2,7 +2,6 @@
 
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import Image from "next/image"
 import { SPRING_SMOOTH, SPRING_SNAPPY } from "@/lib/animation"
 
 interface Project {
@@ -12,14 +11,14 @@ interface Project {
   stack: string[]
   live: string | null
   github: string | null
-  image: string
-  accent: string
 }
 
 interface ProjectPanelProps {
   project: Project
   isFirst: boolean
 }
+
+const STACK_COLOR = "#3B8BEB"
 
 export default function ProjectPanel({ project, isFirst }: ProjectPanelProps) {
   const ref = useRef<HTMLDivElement>(null)
@@ -41,7 +40,7 @@ export default function ProjectPanel({ project, isFirst }: ProjectPanelProps) {
         overflow: "hidden",
       }}
     >
-      {/* Subtle panel number */}
+      {/* Panel counter */}
       <span style={{
         position: "absolute",
         top: "32px",
@@ -52,17 +51,16 @@ export default function ProjectPanel({ project, isFirst }: ProjectPanelProps) {
         letterSpacing: "0.15em",
         textTransform: "uppercase",
       }}>
-        {String(project.index + 1).padStart(2, "0")} / {TOTAL_PROJECTS}
+        {String(project.index + 1).padStart(2, "0")} / 04
       </span>
 
-      {/* Left column */}
+      {/* Left */}
       <motion.div
         initial={{ opacity: 0, x: -40 }}
         animate={shouldAnimate ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
         transition={{ delay: 0.15, ...SPRING_SMOOTH }}
         style={{ flex: 1, maxWidth: "480px" }}
       >
-        {/* Project name */}
         <h3 style={{
           fontFamily: "var(--font-display)",
           fontWeight: 800,
@@ -75,7 +73,6 @@ export default function ProjectPanel({ project, isFirst }: ProjectPanelProps) {
           {project.name}
         </h3>
 
-        {/* Description */}
         <p style={{
           fontFamily: "var(--font-body)",
           fontWeight: 300,
@@ -88,22 +85,19 @@ export default function ProjectPanel({ project, isFirst }: ProjectPanelProps) {
           {project.description}
         </p>
 
-        {/* Stack tags */}
+        {/* Stack tags — one color always */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "40px" }}>
           {project.stack.map(tag => (
-            <span
-              key={tag}
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "11px",
-                color: project.accent,
-                border: `1px solid ${project.accent}40`,
-                borderRadius: "4px",
-                padding: "4px 10px",
-                letterSpacing: "0.06em",
-                backgroundColor: `${project.accent}08`,
-              }}
-            >
+            <span key={tag} style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "11px",
+              color: STACK_COLOR,
+              border: `1px solid ${STACK_COLOR}40`,
+              borderRadius: "4px",
+              padding: "4px 10px",
+              letterSpacing: "0.06em",
+              backgroundColor: `${STACK_COLOR}08`,
+            }}>
               {tag}
             </span>
           ))}
@@ -154,7 +148,7 @@ export default function ProjectPanel({ project, isFirst }: ProjectPanelProps) {
         </div>
       </motion.div>
 
-      {/* Right column — image */}
+      {/* Right — placeholder image */}
       <motion.div
         initial={{ opacity: 0, x: 40, rotate: 2 }}
         animate={shouldAnimate ? { opacity: 1, x: 0, rotate: 1 } : { opacity: 0, x: 40, rotate: 2 }}
@@ -171,59 +165,23 @@ export default function ProjectPanel({ project, isFirst }: ProjectPanelProps) {
             overflow: "hidden",
             boxShadow: "0 24px 48px rgba(26,24,20,0.12)",
             position: "relative",
-            backgroundColor: "var(--color-bg-elevated)",
-          }}
-        >
-          {/* Placeholder — swap in Epic 8 */}
-          <div style={{
-            width: "100%",
-            height: "100%",
+            backgroundColor: "var(--color-bg-elevated, #1a1814)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: `${project.accent}10`,
-            border: `1px solid ${project.accent}20`,
+            border: "1px solid rgba(59,139,235,0.12)",
+          }}
+        >
+          <span style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "11px",
+            color: "rgba(59,139,235,0.4)",
+            letterSpacing: "0.1em",
           }}>
-            <span style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "12px",
-              color: project.accent,
-              letterSpacing: "0.1em",
-              opacity: 0.6,
-            }}>
-              screenshot coming
-            </span>
-          </div>
+            screenshot coming
+          </span>
         </motion.div>
       </motion.div>
-
-      {/* Glyph strip bottom */}
-      <div style={{
-        position: "absolute",
-        bottom: "32px",
-        left: "80px",
-        display: "flex",
-        gap: "4px",
-        alignItems: "center",
-      }}>
-        {Array.from({ length: 16 }).map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ scaleX: 0 }}
-            animate={shouldAnimate ? { scaleX: 1 } : { scaleX: 0 }}
-            transition={{ delay: 0.5 + i * 0.04, ...SPRING_SNAPPY }}
-            style={{
-              width: "20px",
-              height: "2px",
-              backgroundColor: project.accent,
-              opacity: 0.15 + (i / 16) * 0.4,
-              transformOrigin: "left",
-            }}
-          />
-        ))}
-      </div>
     </div>
   )
 }
-
-const TOTAL_PROJECTS = "04"

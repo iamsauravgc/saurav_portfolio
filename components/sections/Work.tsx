@@ -1,8 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import { motion, useScroll, useTransform, useInView } from "framer-motion"
-import { SPRING_SMOOTH, SPRING_SNAPPY, clipRevealVariants, EASE_OUT_EXPO } from "@/lib/animation"
+import { motion, useScroll, useTransform } from "framer-motion"
 import ProjectPanel from "@/components/ui/ProjectPanel"
 
 const PROJECTS = [
@@ -13,8 +12,6 @@ const PROJECTS = [
     stack: ["Next.js", "TypeScript", "D3.js", "PostgreSQL"],
     live: "https://nepal-dashboard.vercel.app",
     github: "https://github.com/saurav856/nepal-dashboard",
-    image: "/images/projects/nepal-dashboard.png",
-    accent: "#3B8BEB",
   },
   {
     index: 1,
@@ -23,8 +20,6 @@ const PROJECTS = [
     stack: ["Python", "FastAPI", "Docker", "PostgreSQL"],
     live: null,
     github: "https://github.com/saurav856/mlops-pipeline",
-    image: "/images/projects/mlops.png",
-    accent: "#E63329",
   },
   {
     index: 2,
@@ -33,8 +28,6 @@ const PROJECTS = [
     stack: ["Python", "FastAPI", "OpenAI", "Redis"],
     live: null,
     github: "https://github.com/saurav856/ai-news-scraper",
-    image: "/images/projects/news-scraper.png",
-    accent: "#28C840",
   },
   {
     index: 3,
@@ -43,45 +36,53 @@ const PROJECTS = [
     stack: ["Java", "Open Source", "Algorithms"],
     live: "https://the-algorithms.com",
     github: "https://github.com/TheAlgorithms/Java",
-    image: "/images/projects/algorithms.png",
-    accent: "#F5A623",
   },
 ]
 
-function WorkHeadline() {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, amount: 0.5 })
+const PER_PANEL = 150
+const N = PROJECTS.length
+
+function PanelWrapper({ children, index, scrollYProgress }: {
+  children: React.ReactNode
+  index: number
+  scrollYProgress: any
+}) {
+  const start = index / N
+  const end = (index + 1) / N
+
+  // This panel slides up into view
+  const y = useTransform(
+    scrollYProgress,
+    [Math.max(0, start - 0.15), start],
+    index === 0 ? ["0%", "0%"] : ["100%", "0%"]
+  )
+
+  // This panel scales down as the NEXT panel comes in
+  const nextStart = (index + 1) / N
+  const scale = useTransform(
+    scrollYProgress,
+    [nextStart - 0.05, nextStart + 0.15],
+    [1, 0.88]
+  )
+
+  const borderRadius = index === 0 ? "0px" : "20px 20px 0 0"
 
   return (
-    <div
-      ref={ref}
+    <motion.div
       style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 1,
-        padding: "80px 80px 40px",
-        pointerEvents: "none",
+        position: "absolute",
+        inset: 0,
+        y: index === 0 ? "0%" : y,
+        scale: index < N - 1 ? scale : 1,
+        zIndex: index + 1,
+        borderRadius,
+        overflow: "hidden",
+        transformOrigin: "top center",
+        boxShadow: index > 0 ? "0 -8px 40px rgba(26,24,20,0.14)" : "none",
       }}
     >
-      <div style={{ overflow: "hidden" }}>
-        <motion.h2
-          initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
-          animate={isInView ? { clipPath: "inset(0% 0% 0% 0%)" } : {}}
-          transition={{ duration: 0.9, ease: EASE_OUT_EXPO }}
-          style={{
-            fontFamily: "var(--font-display)",
-            fontWeight: 800,
-            fontSize: "clamp(64px, 10vw, 120px)",
-            color: "var(--color-text-primary)",
-            letterSpacing: "-0.04em",
-            lineHeight: 0.95,
-            margin: 0,
-          }}
-        >
-          Work.
-        </motion.h2>
-      </div>
-    </div>
+      {children}
+    </motion.div>
   )
 }
 
@@ -89,39 +90,18 @@ export default function Work() {
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: containerRef })
 
-  // Per-panel Y transforms — slides in from top
-  const panel2Y = useTransform(scrollYProgress, [0.15, 0.4], ["100%", "0%"])
-  const panel3Y = useTransform(scrollYProgress, [0.4, 0.65], ["100%", "0%"])
-  const panel4Y = useTransform(scrollYProgress, [0.65, 0.9], ["100%", "0%"])
-
-  const panelTransforms = [null, panel2Y, panel3Y, panel4Y]
-
   return (
-    <section id="work" style={{ width: "100%" }}>
-      {/* Scroll container — total height = panels × 100vh + header */}
+    <section id="work" className="section-work" style={{ width: "100%", position: "relative" }}>
       <div
         ref={containerRef}
-        style={{ height: `${PROJECTS.length * 100 + 20}vh`, position: "relative" }}
+        style={{ height: `${N * PER_PANEL}vh`, position: "relative" }}
       >
-        {/* Sticky wrapper — holds all panels stacked */}
         <div style={{ position: "sticky", top: 0, height: "100vh", overflow: "hidden" }}>
-
-          {PROJECTS.map((project, i) => {
-            const yTransform = panelTransforms[i]
-            return (
-              <motion.div
-                key={project.index}
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  y: yTransform ?? "0%",
-                  zIndex: i + 1,
-                }}
-              >
-                <ProjectPanel project={project} isFirst={i === 0} />
-              </motion.div>
-            )
-          })}
+          {PROJECTS.map((project, i) => (
+            <PanelWrapper key={i} index={i} scrollYProgress={scrollYProgress}>
+              <ProjectPanel project={project} isFirst={i === 0} />
+            </PanelWrapper>
+          ))}
         </div>
       </div>
     </section>

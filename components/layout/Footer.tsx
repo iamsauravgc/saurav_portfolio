@@ -137,7 +137,7 @@ export default function Footer() {
               width: "6px",
               height: "6px",
               borderRadius: "50%",
-              backgroundColor: "var(--color-nothing-red)",
+              backgroundColor: "var(--color-accent-red)",
               flexShrink: 0,
             }}
           />
