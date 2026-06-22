@@ -9,6 +9,7 @@ export default function PhoneObject() {
   const [hovered, setHovered] = useState(false)
   return (
     <motion.div
+      className="floating-object"
       initial={{ opacity: 0, scale: 0.85 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 1.2, ...SPRING_BOUNCY }}
@@ -24,7 +25,7 @@ export default function PhoneObject() {
         pointerEvents: "auto",
         cursor: "none",
         animation: "float1 6s ease-in-out infinite",
-        filter: hovered ? "drop-shadow(0 0 24px rgba(59,139,235,0.5))" : "drop-shadow(0 12px 32px rgba(26,24,20,0.2))",
+        filter: hovered ? "drop-shadow(0 20px 30px rgba(0,0,0,0.15)) drop-shadow(0 0 24px rgba(59,139,235,0.5))" : undefined,
         transition: "filter 0.3s ease",
         zIndex: 5,
       }}

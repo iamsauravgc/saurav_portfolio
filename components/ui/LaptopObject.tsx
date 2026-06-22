@@ -22,6 +22,7 @@ export default function LaptopObject() {
   return (
     <motion.div
       ref={ref}
+      className="floating-object"
       initial={{ opacity: 0, scale: 0.85 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 1.4, ...SPRING_BOUNCY }}
@@ -40,7 +41,7 @@ export default function LaptopObject() {
         perspective: 800,
         rotateX,
         rotateY,
-        filter: "drop-shadow(0 16px 40px rgba(26,24,20,0.2))",
+
         zIndex: 6,
       }}
     >

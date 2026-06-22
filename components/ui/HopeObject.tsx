@@ -7,6 +7,7 @@ import { SPRING_SNAPPY } from "@/lib/animation"
 export default function HopeObject() {
   return (
     <motion.div
+      className="floating-object"
       initial={{ opacity: 0, scale: 0.85 }}
       animate={{ opacity: 1, scale: 1 }}
       whileHover={{ scale: 1.05, rotate: -2 }}
@@ -20,7 +21,7 @@ export default function HopeObject() {
         pointerEvents: "auto",
         cursor: "none",
         animation: "float2 9s ease-in-out infinite",
-        filter: "drop-shadow(0 8px 24px rgba(26,24,20,0.14))",
+
         zIndex: 4,
       }}
     >

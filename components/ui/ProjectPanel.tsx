@@ -32,7 +32,7 @@ export default function ProjectPanel({ project, isFirst }: ProjectPanelProps) {
         width: "100%",
         height: "100vh",
         backgroundColor: "var(--color-bg)",
-        backgroundImage: "radial-gradient(circle, rgba(var(--dot-r), var(--dot-g), var(--dot-b), var(--dot-opacity)) 0.75px, transparent 0.75px)",
+        backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.75) 1.5px, transparent 1.5px)",
         backgroundSize: "24px 24px",
         display: "flex",
         alignItems: "center",

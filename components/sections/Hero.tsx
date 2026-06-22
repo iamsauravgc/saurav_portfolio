@@ -101,6 +101,7 @@ export default function Hero({ loaderDone }: HeroProps) {
                 fontWeight: 800,
                 fontSize: "clamp(72px, 14vw, 180px)",
                 color: "var(--color-text-primary)",
+                textShadow: "0 2px 0 rgba(255,255,255,0.3)",
                 letterSpacing: "-0.04em",
                 lineHeight: 0.95,
                 margin: 0,

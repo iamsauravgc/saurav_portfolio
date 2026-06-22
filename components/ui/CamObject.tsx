@@ -9,6 +9,7 @@ export default function CamObject() {
   const [hovered, setHovered] = useState(false)
   return (
     <motion.div
+      className="floating-object"
       initial={{ opacity: 0, scale: 0.85 }}
       animate={{ opacity: 1, scale: 1 }}
       onMouseEnter={() => setHovered(true)}
@@ -24,7 +25,7 @@ export default function CamObject() {
         pointerEvents: "auto",
         cursor: "none",
         animation: "float3 8s ease-in-out infinite",
-        filter: hovered ? "drop-shadow(0 0 20px rgba(59,139,235,0.4)) brightness(1.05)" : "drop-shadow(0 10px 28px rgba(26,24,20,0.18))",
+        filter: hovered ? "drop-shadow(0 20px 30px rgba(0,0,0,0.15)) drop-shadow(0 0 20px rgba(59,139,235,0.4)) brightness(1.05)" : undefined,
         transition: "filter 0.3s ease",
         zIndex: 4,
       }}

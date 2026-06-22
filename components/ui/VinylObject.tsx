@@ -9,6 +9,7 @@ export default function VinylObject() {
   const [hovered, setHovered] = useState(false)
   return (
     <motion.div
+      className="floating-object"
       initial={{ opacity: 0, scale: 0.85 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 1.25, ...SPRING_BOUNCY }}
@@ -28,7 +29,6 @@ export default function VinylObject() {
     >
       <div style={{
         animation: hovered ? "spin 1.5s linear infinite" : "spin 10s linear infinite",
-        filter: "drop-shadow(0 12px 40px rgba(26,24,20,0.25))",
       }}>
         <Image src="/images/vinyl.png" alt="Blond — Frank Ocean" width={260} height={260}
           style={{ width: "100%", height: "auto", objectFit: "contain" }} />
