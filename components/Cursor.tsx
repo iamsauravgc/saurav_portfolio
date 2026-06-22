@@ -6,11 +6,11 @@ import { motion, useMotionValue, useSpring } from "framer-motion"
 type CursorVariant = "default" | "link" | "project" | "vinyl" | "listen"
 
 const CURSOR_VARIANTS = {
-  default: { size: 8, opacity: 1, text: "" },
-  link:    { size: 40, opacity: 0.15, text: "" },
-  project: { size: 64, opacity: 0.12, text: "view ↗" },
-  vinyl:   { size: 48, opacity: 0.12, text: "play" },
-  listen:  { size: 48, opacity: 0.12, text: "listen" },
+  default: { size: 20, opacity: 1, text: "", color: "var(--color-text-primary)" },
+  link:    { size: 24, opacity: 0.35, text: "", color: "var(--color-accent)" },
+  project: { size: 64, opacity: 0.12, text: "view ↗", color: "var(--color-text-primary)" },
+  vinyl:   { size: 48, opacity: 0.12, text: "play", color: "var(--color-text-primary)" },
+  listen:  { size: 48, opacity: 0.12, text: "listen", color: "var(--color-text-primary)" },
 }
 
 export default function Cursor() {
@@ -20,8 +20,8 @@ export default function Cursor() {
   const mouseX = useMotionValue(-100)
   const mouseY = useMotionValue(-100)
 
-  const springX = useSpring(mouseX, { stiffness: 150, damping: 20, mass: 0.5 })
-  const springY = useSpring(mouseY, { stiffness: 150, damping: 20, mass: 0.5 })
+  const springX = useSpring(mouseX, { stiffness: 300, damping: 25, mass: 0.3 })
+  const springY = useSpring(mouseY, { stiffness: 300, damping: 25, mass: 0.3 })
 
   useEffect(() => {
     const handleMove = (e: MouseEvent) => {
@@ -88,11 +88,11 @@ export default function Cursor() {
           width: current.size,
           height: current.size,
           opacity: isVisible ? current.opacity : 0,
+          backgroundColor: current.color,
         }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
         style={{
           borderRadius: "50%",
-          backgroundColor: "var(--color-text-primary)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

@@ -61,7 +61,7 @@ export default function NowPlayingCard() {
               style={{
                 width: "3px",
                 borderRadius: "2px",
-                backgroundColor: "var(--color-nothing-blue)",
+                backgroundColor: "var(--color-accent2)",
                 transformOrigin: "bottom",
               }}
             />

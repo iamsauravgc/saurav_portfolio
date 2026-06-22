@@ -137,7 +137,7 @@ export default function Footer() {
               width: "6px",
               height: "6px",
               borderRadius: "50%",
-              backgroundColor: "var(--color-accent-red)",
+              backgroundColor: "var(--color-accent)",
               flexShrink: 0,
             }}
           />
@@ -181,7 +181,7 @@ function FooterLink({ href, label }: { href: string; label: string }) {
         transition: "color 0.2s ease",
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.color = "var(--color-nothing-blue)"
+        e.currentTarget.style.color = "var(--color-accent2)"
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.color = "var(--color-text-secondary)"

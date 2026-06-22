@@ -8,7 +8,6 @@ interface LoaderProps {
 }
 
 const LETTERS = ["S", "A", "U", "R", "A", "V"]
-const GLYPH_COUNT = 12
 
 export default function Loader({ onComplete }: LoaderProps) {
   const [scope, animate] = useAnimate()
@@ -24,21 +23,7 @@ export default function Loader({ onComplete }: LoaderProps) {
         { duration: 0.3, delay: stagger(0.06), ease: [0.16, 1, 0.3, 1] }
       )
 
-      // 2. Glyph segments draw in
-      await animate(
-        ".loader-glyph",
-        { scaleX: [0, 1], opacity: [0, 1] },
-        { duration: 0.15, delay: stagger(0.05), ease: [0.16, 1, 0.3, 1] }
-      )
-
-      // 3. Pulse blue
-      await animate(
-        ".loader-glyph",
-        { backgroundColor: ["rgba(255,255,255,0.15)", "#3B8BEB", "rgba(255,255,255,0.15)"] },
-        { duration: 0.4, delay: stagger(0.03) }
-      )
-
-      // 4. Fade out loader
+      // 2. Fade out loader
       await animate(
         scope.current,
         { opacity: 0 },
@@ -92,23 +77,7 @@ export default function Loader({ onComplete }: LoaderProps) {
         ))}
       </div>
 
-      {/* Glyph strip */}
-      <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
-        {Array.from({ length: GLYPH_COUNT }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="loader-glyph"
-            initial={{ scaleX: 0, opacity: 0 }}
-            style={{
-              width: "32px",
-              height: "3px",
-              borderRadius: "2px",
-              backgroundColor: "rgba(255,255,255,0.15)",
-              transformOrigin: "left center",
-            }}
-          />
-        ))}
-      </div>
+
     </motion.div>
   )
 }

@@ -99,7 +99,7 @@ export default function Connect() {
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
               transition={{ delay: 0.5 + i * 0.08, ...SPRING_SMOOTH }}
-              whileHover={{ x: 6, color: "var(--color-nothing-blue)" }}
+              whileHover={{ x: 6, color: "var(--color-accent2)" }}
               style={{
                 display: "flex",
                 alignItems: "center",

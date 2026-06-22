@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { fadeUpVariants, staggerContainer, SPRING_SNAPPY } from "@/lib/animation"
 import Clock from "@/components/ui/Clock"
-import ThemeToggle from "@/components/ui/ThemeToggle"
+
 
 const NAV_LINKS = [
   { label: "About", href: "#about" },
@@ -80,7 +80,7 @@ export default function Navbar() {
                   ease: "easeInOut",
                 }}
                 style={{
-                  color: "var(--color-accent-red)",
+                  color: "var(--color-accent)",
                   fontSize: "8px",
                   lineHeight: 1,
                 }}
@@ -99,12 +99,11 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Right: clock + theme toggle */}
+            {/* Right: clock + hamburger */}
             <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
               <div className="hidden md:block">
                 <Clock />
               </div>
-              <ThemeToggle />
               {/* Mobile hamburger */}
               <button
                 className="sm:hidden"
@@ -205,7 +204,7 @@ function NavLink({ href, label }: { href: string; label: string }) {
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget
-        el.style.color = "var(--color-nothing-blue)"
+        el.style.color = "var(--color-accent2)"
         const dot = el.querySelector(".nav-dot") as HTMLElement
         if (dot) dot.style.transform = "scaleX(1)"
       }}
@@ -225,7 +224,7 @@ function NavLink({ href, label }: { href: string; label: string }) {
           left: 0,
           right: 0,
           height: "1px",
-          backgroundColor: "var(--color-nothing-blue)",
+          backgroundColor: "var(--color-accent2)",
           transform: "scaleX(0)",
           transformOrigin: "left",
           transition: "transform 0.2s cubic-bezier(0.16,1,0.3,1)",

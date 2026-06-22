@@ -3,7 +3,14 @@
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import Image from "next/image"
-import { SPRING_SMOOTH } from "@/lib/animation"
+import { SPRING_SMOOTH, SPRING_SNAPPY } from "@/lib/animation"
+
+const CURRENTLY = [
+  { label: "building", value: "this portfolio + MLOps pipeline" },
+  { label: "learning", value: "Rust, system design, D3.js" },
+  { label: "listening", value: "Blonde — Frank Ocean (always)" },
+  { label: "reading", value: "Designing Data-Intensive Applications" },
+]
 
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -27,11 +34,11 @@ export default function About() {
         width: "100%",
         maxWidth: "1100px",
         display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: "80px",
-        alignItems: "center",
+        gridTemplateColumns: "1.1fr 0.9fr",
+        gap: "64px",
+        alignItems: "start",
       }}>
-        {/* Left — Intro */}
+        {/* Left — Bio */}
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -24 }}
@@ -40,7 +47,7 @@ export default function About() {
           <p style={{
             fontFamily: "var(--font-mono)",
             fontSize: "11px",
-            color: "var(--color-copper)",
+            color: "var(--color-accent)",
             letterSpacing: "0.15em",
             textTransform: "uppercase",
             marginBottom: "20px",
@@ -57,7 +64,7 @@ export default function About() {
             lineHeight: 0.95,
             margin: "0 0 24px",
           }}>
-            Saurav G.C.
+            I build things <br />that work.
           </h2>
 
           <p style={{
@@ -68,15 +75,15 @@ export default function About() {
             color: "var(--color-text-secondary)",
             maxWidth: "42ch",
           }}>
-            CS student based in Kathmandu, Nepal. I build things that work — 
-            full-stack apps, ML pipelines, and the occasional open source PR. 
-            I care about craft, how clearly things communicate, and systems 
-            that scale. Always in &quot;let me try this&quot; mode.
+            CS student based in Kathmandu, Nepal. I care about craft — 
+            how clearly things communicate, how well systems scale, and 
+            whether the people using them actually enjoy the experience. 
+            Always in &quot;let me try this&quot; mode.
           </p>
 
           <div style={{
             display: "flex",
-            gap: "12px",
+            gap: "10px",
             marginTop: "32px",
             flexWrap: "wrap",
           }}>
@@ -88,7 +95,8 @@ export default function About() {
                 padding: "5px 12px",
                 borderRadius: "100px",
                 border: "1px solid var(--color-border-strong)",
-                color: "var(--color-text-secondary)",
+                color: "var(--color-accent2)",
+                backgroundColor: "rgba(59,139,235,0.06)",
               }}>
                 {tech}
               </span>
@@ -96,45 +104,107 @@ export default function About() {
           </div>
         </motion.div>
 
-        {/* Right — Photo card */}
+        {/* Right — Photo + Currently */}
         <motion.div
           initial={{ opacity: 0, x: 24 }}
           animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 24 }}
           transition={{ delay: 0.2, ...SPRING_SMOOTH }}
           style={{
-            position: "relative",
-            width: "100%",
-            aspectRatio: "3/4",
-            maxWidth: "360px",
-            marginLeft: "auto",
-            borderRadius: "12px",
-            overflow: "hidden",
-            boxShadow: "0 24px 64px rgba(28,24,20,0.18)",
+            display: "flex",
+            flexDirection: "column",
+            gap: "24px",
           }}
         >
-          <Image
-            src="/images/cam.png"
-            alt="Saurav G.C."
-            fill
-            style={{ objectFit: "cover" }}
-            sizes="360px"
-          />
+          {/* Photo card */}
           <div style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            padding: "20px",
-            background: "linear-gradient(transparent, rgba(20,18,16,0.6))",
+            position: "relative",
+            width: "100%",
+            aspectRatio: "4/3",
+            maxWidth: "400px",
+            borderRadius: "12px",
+            overflow: "hidden",
+            boxShadow: "0 24px 64px rgba(45,25,9,0.18)",
+          }}>
+            <Image
+              src="/images/cam.png"
+              alt="Saurav G.C."
+              fill
+              style={{ objectFit: "cover" }}
+              sizes="400px"
+            />
+            <div style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              padding: "20px",
+              background: "linear-gradient(transparent, rgba(22,19,14,0.6))",
+            }}>
+              <p style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "10px",
+                color: "rgba(237,224,196,0.8)",
+                letterSpacing: "0.1em",
+              }}>
+                kathmandu · nepal
+              </p>
+            </div>
+          </div>
+
+          {/* Currently card */}
+          <div style={{
+            border: "1px solid var(--color-border)",
+            borderRadius: "12px",
+            padding: "20px 24px",
+            maxWidth: "400px",
+            backgroundColor: "var(--color-bg)",
           }}>
             <p style={{
               fontFamily: "var(--font-mono)",
-              fontSize: "10px",
-              color: "rgba(255,255,255,0.7)",
-              letterSpacing: "0.1em",
+              fontSize: "9px",
+              color: "var(--color-text-muted)",
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
+              marginBottom: "16px",
             }}>
-              kathmandu · nepal
+              <motion.span
+                animate={{ opacity: [1, 0.3, 1] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                style={{ color: "var(--color-accent)", marginRight: "6px" }}
+              >
+                ●
+              </motion.span>
+              currently
             </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              {CURRENTLY.map((item) => (
+                <div key={item.label} style={{
+                  display: "flex",
+                  gap: "12px",
+                  alignItems: "baseline",
+                }}>
+                  <span style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "10px",
+                    color: "var(--color-text-muted)",
+                    letterSpacing: "0.06em",
+                    minWidth: "64px",
+                    textTransform: "uppercase",
+                  }}>
+                    {item.label}
+                  </span>
+                  <span style={{
+                    fontFamily: "var(--font-body)",
+                    fontWeight: 400,
+                    fontSize: "14px",
+                    color: "var(--color-text-primary)",
+                    lineHeight: 1.4,
+                  }}>
+                    {item.value}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>

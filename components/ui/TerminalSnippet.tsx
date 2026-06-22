@@ -55,7 +55,7 @@ export default function TerminalSnippet() {
           color: "var(--color-text-secondary)",
         }}>
           <div>
-            <span style={{ color: "var(--color-nothing-blue)" }}>$</span>{" "}
+            <span style={{ color: "var(--color-accent2)" }}>$</span>{" "}
             ls interests/
           </div>
           <div style={{ color: "var(--color-text-muted)" }}>

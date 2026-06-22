@@ -2,6 +2,7 @@
 
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
+import Image from "next/image"
 import { SPRING_SMOOTH, SPRING_SNAPPY } from "@/lib/animation"
 
 interface Project {
@@ -11,14 +12,13 @@ interface Project {
   stack: string[]
   live: string | null
   github: string | null
+  image?: string
 }
 
 interface ProjectPanelProps {
   project: Project
   isFirst: boolean
 }
-
-const STACK_COLOR = "#3B8BEB"
 
 export default function ProjectPanel({ project, isFirst }: ProjectPanelProps) {
   const ref = useRef<HTMLDivElement>(null)
@@ -32,6 +32,8 @@ export default function ProjectPanel({ project, isFirst }: ProjectPanelProps) {
         width: "100%",
         height: "100vh",
         backgroundColor: "var(--color-bg)",
+        backgroundImage: "radial-gradient(circle, rgba(var(--dot-r), var(--dot-g), var(--dot-b), var(--dot-opacity)) 0.75px, transparent 0.75px)",
+        backgroundSize: "24px 24px",
         display: "flex",
         alignItems: "center",
         padding: "0 80px",
@@ -54,7 +56,7 @@ export default function ProjectPanel({ project, isFirst }: ProjectPanelProps) {
         {String(project.index + 1).padStart(2, "0")} / 04
       </span>
 
-      {/* Left */}
+      {/* Left — content */}
       <motion.div
         initial={{ opacity: 0, x: -40 }}
         animate={shouldAnimate ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
@@ -85,18 +87,18 @@ export default function ProjectPanel({ project, isFirst }: ProjectPanelProps) {
           {project.description}
         </p>
 
-        {/* Stack tags — one color always */}
+        {/* Stack tags */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "40px" }}>
           {project.stack.map(tag => (
             <span key={tag} style={{
               fontFamily: "var(--font-mono)",
               fontSize: "11px",
-              color: STACK_COLOR,
-              border: `1px solid ${STACK_COLOR}40`,
+              color: "var(--color-accent2)",
+              border: "1px solid rgba(59,139,235,0.25)",
               borderRadius: "4px",
               padding: "4px 10px",
               letterSpacing: "0.06em",
-              backgroundColor: `${STACK_COLOR}08`,
+              backgroundColor: "rgba(59,139,235,0.06)",
             }}>
               {tag}
             </span>
@@ -120,6 +122,7 @@ export default function ProjectPanel({ project, isFirst }: ProjectPanelProps) {
                 letterSpacing: "0.06em",
                 borderBottom: "1px solid var(--color-text-primary)",
                 paddingBottom: "2px",
+                cursor: "none",
               }}
             >
               Live ↗
@@ -140,6 +143,7 @@ export default function ProjectPanel({ project, isFirst }: ProjectPanelProps) {
                 letterSpacing: "0.06em",
                 borderBottom: "1px solid var(--color-text-muted)",
                 paddingBottom: "2px",
+                cursor: "none",
               }}
             >
               GitHub ↗
@@ -148,7 +152,7 @@ export default function ProjectPanel({ project, isFirst }: ProjectPanelProps) {
         </div>
       </motion.div>
 
-      {/* Right — placeholder image */}
+      {/* Right — screenshot / placeholder */}
       <motion.div
         initial={{ opacity: 0, x: 40, rotate: 2 }}
         animate={shouldAnimate ? { opacity: 1, x: 0, rotate: 1 } : { opacity: 0, x: 40, rotate: 2 }}
@@ -163,23 +167,49 @@ export default function ProjectPanel({ project, isFirst }: ProjectPanelProps) {
             aspectRatio: "16/10",
             borderRadius: "8px",
             overflow: "hidden",
-            boxShadow: "0 24px 48px rgba(26,24,20,0.12)",
+            boxShadow: "0 24px 48px rgba(45,25,9,0.12)",
             position: "relative",
-            backgroundColor: "var(--color-bg-elevated, #1a1814)",
+            backgroundColor: "var(--color-bg-elevated)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            border: "1px solid rgba(59,139,235,0.12)",
+            border: "1px solid var(--color-border)",
           }}
         >
-          <span style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "11px",
-            color: "rgba(59,139,235,0.4)",
-            letterSpacing: "0.1em",
-          }}>
-            screenshot coming
-          </span>
+          {project.image ? (
+            <Image
+              src={project.image}
+              alt={`${project.name} screenshot`}
+              fill
+              style={{ objectFit: "cover" }}
+              sizes="560px"
+            />
+          ) : (
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "8px",
+            }}>
+              <span style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "11px",
+                color: "var(--color-text-muted)",
+                letterSpacing: "0.1em",
+              }}>
+                screenshot coming
+              </span>
+              <span style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "9px",
+                color: "var(--color-text-muted)",
+                letterSpacing: "0.06em",
+                opacity: 0.5,
+              }}>
+                (add to public/images/projects/)
+              </span>
+            </div>
+          )}
         </motion.div>
       </motion.div>
     </div>
