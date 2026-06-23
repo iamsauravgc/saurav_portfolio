@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { GeistMono } from "geist/font/mono"
 import { Caveat, Marck_Script } from "next/font/google"
+import Dot from "@/components/animata/background/dot"
 import "./globals.css"
 
 const caveat = Caveat({ subsets: ["latin"], variable: "--font-handwritten" })
@@ -24,7 +25,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${GeistMono.variable} ${caveat.variable} ${marckScript.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Dot color="rgba(0,0,0,0.12)" size={1.2} spacing={10} style={{ backgroundColor: "var(--color-bg)", minHeight: "100vh" }}>
+          {children}
+        </Dot>
+      </body>
     </html>
   )
 }
