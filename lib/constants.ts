@@ -1,43 +1,4 @@
-export const PROJECTS = [
-    {
-      id: "01",
-      name: "Nepal Economic Dashboard",
-      description: "Full-stack economic data platform tracking Nepal remittance, GDP, and trade indicators with ML forecasting.",
-      stack: ["Python", "FastAPI", "React", "PostgreSQL", "scikit-learn"],
-      live: "https://nepal-economic-dashboard.vercel.app",
-      github: "https://github.com/saurav856/nepal-remittance-tracker",
-      image: "/images/projects/nepal-dashboard.svg",
-    },
-    {
-      id: "02",
-      name: "MLOps Credit Default Pipeline",
-      description: "Automated ML pipeline for credit card default prediction with Airflow orchestration and Streamlit dashboard.",
-      stack: ["Python", "Airflow", "Docker", "PostgreSQL", "Streamlit"],
-      live: null,
-      github: null,
-      image: "/images/projects/mlops.svg",
-    },
-    {
-      id: "03",
-      name: "AI News Scraper",
-      description: "Automated scraper aggregating AI research and news from multiple sources with RSS parsing.",
-      stack: ["Python", "BeautifulSoup", "RSS", "GitHub Actions"],
-      live: null,
-      github: "https://github.com/saurav856/AI-News-Scraper",
-      image: "/images/projects/scraper.svg",
-    },
-    {
-      id: "04",
-      name: "TheAlgorithms Contributions",
-      description: "4 merged pull requests to one of GitHub's largest open source Python repositories.",
-      stack: ["Python", "Open Source"],
-      live: "https://github.com/TheAlgorithms/Python",
-      github: null,
-      image: "/images/projects/algorithms.svg",
-    },
-  ]
-  
-  export const SOCIAL = {
+export const SOCIAL = {
     github:   "https://github.com/saurav856",
     linkedin: "https://www.linkedin.com/in/iamsauravgc/",
     email:    "sauravgc33@gmail.com",

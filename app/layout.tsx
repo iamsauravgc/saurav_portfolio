@@ -1,10 +1,10 @@
 import type { Metadata } from "next"
-import { JetBrains_Mono, Reenie_Beanie, Fraunces, Geist_Mono } from "next/font/google"
+import { JetBrains_Mono, Reenie_Beanie, Geist_Mono, Manrope } from "next/font/google"
 import localFont from "next/font/local"
 import Dot from "@/components/animata/background/dot"
 import "./globals.css"
 
-const fraunces = Fraunces({ subsets: ["latin"], weight: "600", variable: "--font-display" })
+const manrope = Manrope({ subsets: ["latin"], weight: ["200", "300", "400", "500", "600"] })
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" })
 const geistMono = Geist_Mono({ subsets: ["latin"], weight: "400", variable: "--font-geist-mono" })
 const reenieBeanie = Reenie_Beanie({ subsets: ["latin"], weight: "400", variable: "--font-handwritten" })
@@ -32,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${jetbrainsMono.variable} ${geistMono.variable} ${reenieBeanie.variable} ${historiaSky.variable}`}>
+    <html lang="en" className={`${jetbrainsMono.variable} ${geistMono.variable} ${reenieBeanie.variable} ${historiaSky.variable}`}>
       <body>
         <Dot color="rgba(0,0,0,0.12)" size={1.2} spacing={10} style={{ backgroundColor: "var(--color-bg)", minHeight: "100vh" }}>
           {children}

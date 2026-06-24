@@ -5,9 +5,8 @@ import { motion, AnimatePresence } from "framer-motion"
 import { fadeUpVariants, staggerContainer } from "@/lib/animation"
 
 const NAV_LINKS = [
-  { label: "whoami", href: "#about" },
+  { label: "whoami", href: "#whoami" },
   { label: "Work", href: "#work" },
-  { label: "Connect", href: "#connect" },
 ]
 
 export default function Navbar() {

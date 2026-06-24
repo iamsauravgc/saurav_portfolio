@@ -10,7 +10,6 @@ import Footer from "@/components/layout/Footer"
 import HeroSection from "@/components/hero/HeroSection"
 import WhoAmI from "@/components/sections/WhoAmI"
 import Work from "@/components/sections/Work"
-import Connect from "@/components/sections/Connect"
 
 
 export default function Home() {
@@ -43,8 +42,6 @@ export default function Home() {
           <WhoAmI />
           <div className="section-divider" />
           <Work />
-          <div className="section-divider" />
-          <Connect />
         </main>
         <Footer />
       </div>
