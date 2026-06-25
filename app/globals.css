@@ -49,13 +49,6 @@
   box-shadow: 0 1px 3px rgba(43, 37, 33, 0.06);
 }
 
-/* ── Section divider ── */
-.section-divider {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, var(--color-border-strong) 15%, var(--color-accent) 50%, var(--color-border-strong) 85%, transparent 100%);
-  opacity: 0.5;
-}
 
 /* ── Base Resets ── */
 *, *::before, *::after {
@@ -220,23 +213,16 @@ html.lenis body {
   }
 }
 
-@theme inline {
-  --animate-marquee: marquee var(--duration) infinite linear;
-  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
-  @keyframes marquee {
-  from {
-    transform: translateX(0);
-    }
-  to {
-    transform: translateX(calc(-100% - var(--gap)));
-    }
-  }
-  @keyframes marquee-vertical {
-  from {
-    transform: translateY(0);
-    }
-  to {
-    transform: translateY(calc(-100% - var(--gap)));
-    }
-  }
+/* ── Scroll reveal text ── */
+.scroll-reveal-text {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(14px, 1.6vw, 16px);
+  line-height: 1.65;
+  color: var(--color-text-secondary);
 }
+
+.text-foreground {
+  color: var(--color-text-primary);
+}
+

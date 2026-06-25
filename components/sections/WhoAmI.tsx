@@ -1,25 +1,37 @@
 "use client"
 
-import { motion } from "framer-motion"
-import Image from "next/image"
-import SplitText from "@/components/ui/SplitText"
-import { BlurFade } from "@/components/ui/blur-fade"
-import { Marquee } from "@/components/ui/marquee"
-import { SPRING_BOUNCY } from "@/lib/animation"
+import { IconCloud } from "@/components/ui/icon-cloud"
 
-const cards = [
-  { label: "currently building", value: "saurav-portfolio" },
-  { label: "currently in", value: "Kathmandu, Nepal · GMT+5:45" },
-  { label: "vibe", value: "Frank Ocean on repeat" },
+const bioParagraphs = [
+  "I am a CS/AI student from Kathmandu who believes the best software feels like something — not just works like something. I built Himalayan Hawala to predict forex rates for remittance corridors, a Paper Recommender that maps ArXiv papers by semantic similarity, and an MLOps pipeline for credit card default prediction that monitors drift in production. Every project starts with a question I actually want answered.",
+  "Outside of code, I think a lot about interface design — how a button feels, why one layout breathes and another chokes. I shoot with a Nikon when I remember to carry it, and I have spent more hours than I would admit arranging playlists around Frank Ocean transitions. I care about creative people who make things that feel like them.",
+  "Right now I am exploring the intersection of machine learning and product design — building tools that do not just output predictions but fit into how people actually think. I use Next.js, Python, FastAPI, PostgreSQL, and Airflow daily. Figma is where I argue with myself about margins. I open-source what I can because someone else's public repo taught me most of what I know.",
 ]
 
-const marqueeItems = [
-  "React", "Machine Learning", "Frank Ocean", "UI/UX", "Kathmandu",
-  "Photography", "Nothing Phone", "Framer Motion", "Blond", "Open Source",
-  "Kanye West", "Next.js", "Design Systems", "Nikon", "Figma",
+const slugs = [
+  "python",
+  "javascript",
+  "typescript",
+  "react",
+  "nextdotjs",
+  "fastapi",
+  "postgresql",
+  "docker",
+  "git",
+  "github",
+  "scikitlearn",
+  "pandas",
+  "jupyter",
+  "linux",
+  "figma",
+  "nodedotjs",
 ]
 
 export default function WhoAmI() {
+  const images = slugs.map(
+    (slug) => `/images/tech/${slug}.svg`
+  )
+
   return (
     <section
       id="whoami"
@@ -28,211 +40,51 @@ export default function WhoAmI() {
         background: "var(--color-bg)",
       }}
     >
-      <div style={{ maxWidth: "1000px", margin: "0 auto", paddingLeft: "clamp(0px, 2vw, 32px)" }}>
-        {/* Block 1: Section Tag */}
+      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
         <span
           style={{
             fontFamily: "var(--font-mono)",
-            fontSize: "11px",
+            fontSize: "clamp(13px, 1.4vw, 16px)",
             textTransform: "uppercase",
-            letterSpacing: "0.12em",
+            letterSpacing: "0.15em",
             color: "var(--color-accent)",
+            fontWeight: 500,
           }}
         >
           about
         </span>
 
-        {/* Block 2: Headline + floating object */}
-        <div style={{ position: "relative", marginTop: "28px" }}>
-          {/* Headline text */}
-          <div style={{ position: "relative", zIndex: 2 }}>
-            <div style={{ overflow: "hidden" }}>
-              <SplitText
-                text="Building things"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 200,
-                  fontSize: "clamp(52px, 7.5vw, 108px)",
-                  lineHeight: 0.95,
-                  letterSpacing: "-0.02em",
-                  color: "var(--color-text-primary)",
-                }}
-                delay={80}
-                animationFrom={{ y: "110%", opacity: 0 }}
-                animationTo={{ y: "0%", opacity: 1 }}
-                threshold={0.2}
-                rootMargin="-80px"
-              />
-            </div>
-            <div style={{ overflow: "hidden", marginLeft: "clamp(60px, 8vw, 120px)" }}>
-              <SplitText
-                text="worth clicking."
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 200,
-                  fontSize: "clamp(52px, 7.5vw, 108px)",
-                  lineHeight: 0.95,
-                  letterSpacing: "-0.02em",
-                  color: "var(--color-text-primary)",
-                }}
-                delay={80}
-                animationFrom={{ y: "110%", opacity: 0 }}
-                animationTo={{ y: "0%", opacity: 1 }}
-                threshold={0.2}
-                rootMargin="-80px"
-              />
+        <div
+          className="about-grid"
+          style={{
+            display: "flex",
+            gap: "80px",
+            marginTop: "48px",
+            alignItems: "flex-start",
+          }}
+        >
+          <div style={{ flex: "0 0 55%", minWidth: 0 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+              {bioParagraphs.map((p, i) => (
+                <p key={i} className="scroll-reveal-text">{p}</p>
+              ))}
             </div>
           </div>
 
-          {/* Floating polaroid object — slightly overlapping headline */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.85, rotate: -3 }}
-            animate={{ opacity: 1, scale: 1, rotate: -3 }}
-            transition={{ delay: 1.0, ...SPRING_BOUNCY }}
-            style={{
-              position: "absolute",
-              right: "-20px",
-              top: "-10px",
-              zIndex: 1,
-              rotate: "-3deg",
-              width: "clamp(100px, 14vw, 180px)",
-              filter: "drop-shadow(0 16px 24px rgba(0,0,0,0.10))",
-              pointerEvents: "none",
-            }}
-          >
-            <div style={{
-              background: "#fff",
-              padding: "8px 8px 28px 8px",
-              borderRadius: "2px",
-              lineHeight: 0,
-            }}>
-              <Image
-                src="/images/cam.png"
-                alt=""
-                width={180}
-                height={180}
-                style={{ width: "100%", height: "auto", display: "block", objectFit: "cover" }}
-              />
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Block 3: Two Column — slightly offset right */}
-        <div className="whoami-two-col" style={{
-          display: "flex",
-          gap: "80px",
-          alignItems: "flex-start",
-          marginTop: "64px",
-          marginLeft: "clamp(0px, 4vw, 48px)",
-        }}>
-          {/* LEFT — Bio + Stack */}
-          <div style={{ flex: "0 0 58%" }}>
-            <BlurFade delay={0.28} inView>
-              <p style={{
-                fontFamily: "var(--font-body)",
-                fontWeight: 400,
-                fontSize: "18px",
-                lineHeight: 1.65,
-                color: "var(--color-text-secondary)",
-                maxWidth: "480px",
-              }}>
-                CS/AI/ML student from Kathmandu building things on the internet.
-                I care about design as much as I care about the code behind it.
-              </p>
-            </BlurFade>
-
-            <BlurFade delay={0.38} inView>
-              <p style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: "13px",
-                color: "var(--color-text-muted)",
-                letterSpacing: "0.04em",
-                marginTop: "32px",
-              }}>
-                <span style={{ color: "var(--color-accent)" }}>{">"}</span>
-                {"  "}Next.js
-                <span style={{ color: "var(--color-accent2)" }}> {"·"} </span>
-                Python
-                <span style={{ color: "var(--color-accent2)" }}> {"·"} </span>
-                Figma
-                <span style={{ color: "var(--color-accent2)" }}> {"·"} </span>
-                TailwindCSS
-                <span style={{ color: "var(--color-accent2)" }}> {"·"} </span>
-                Framer Motion
-              </p>
-            </BlurFade>
-          </div>
-
-          {/* RIGHT — Fact Cards */}
-          <div style={{ flex: 1 }}>
-            {cards.map((card, i) => (
-              <BlurFade key={card.label} delay={0.3 + i * 0.08} inView>
-                <div style={{ borderBottom: "1px solid var(--color-border)", padding: "16px 0" }}>
-                  <span style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "10px",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.1em",
-                    color: "var(--color-text-muted)",
-                    display: "block",
-                  }}>
-                    {card.label}
-                  </span>
-                  <p style={{
-                    fontFamily: "var(--font-body)",
-                    fontWeight: 500,
-                    fontSize: "15px",
-                    color: "var(--color-text-primary)",
-                    marginTop: "4px",
-                  }}>
-                    {card.value}
-                  </p>
-                </div>
-              </BlurFade>
-            ))}
+          <div style={{ flex: 1, display: "flex", justifyContent: "center", cursor: "grab" }}>
+            <IconCloud images={images} size={520} iconSize={64} />
           </div>
         </div>
 
-        {/* Block 4: Marquee Strip */}
-        <div style={{
-          borderTop: "1px solid var(--color-border-strong)",
-          borderBottom: "1px solid var(--color-border-strong)",
-          padding: "14px 0",
-          marginTop: "80px",
-          overflow: "hidden",
-        }}>
-          <Marquee pauseOnHover>
-            {marqueeItems.map((item, i) => (
-              <span key={i} style={{ marginRight: "24px" }}>
-                <span style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "12px",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.1em",
-                  color: "var(--color-text-muted)",
-                }}>
-                  {item}
-                </span>
-                <span style={{
-                  color: "var(--color-accent)",
-                  fontSize: "8px",
-                  marginLeft: "24px",
-                }}>
-                  {"\u25CF"}
-                </span>
-              </span>
-            ))}
-          </Marquee>
-        </div>
-      </div>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .whoami-two-col {
-            flex-direction: column;
+        <style>{`
+          @media (max-width: 900px) {
+            .about-grid {
+              flex-direction: column !important;
+              gap: 40px !important;
+            }
           }
-        }
-      `}</style>
+        `}</style>
+      </div>
     </section>
   )
 }

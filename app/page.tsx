@@ -5,13 +5,9 @@ import { initLenis } from "@/lib/lenis"
 
 import Cursor from "@/components/Cursor"
 import Loader from "@/components/Loader"
-import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 import HeroSection from "@/components/hero/HeroSection"
 import WhoAmI from "@/components/sections/WhoAmI"
-import Work from "@/components/sections/Work"
-
-
 export default function Home() {
   const [loaderDone, setLoaderDone] = useState(false)
 
@@ -35,13 +31,9 @@ export default function Home() {
           transition: "opacity 0.6s ease-out",
         }}
       >
-        <Navbar />
         <main>
           <HeroSection loaderDone={loaderDone} />
-          <div className="section-divider" />
           <WhoAmI />
-          <div className="section-divider" />
-          <Work />
         </main>
         <Footer />
       </div>
