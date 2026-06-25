@@ -9,6 +9,7 @@ import Footer from "@/components/layout/Footer"
 import HeroSection from "@/components/hero/HeroSection"
 import WhoAmI from "@/components/sections/WhoAmI"
 import Projects from "@/components/sections/Projects"
+import ScrollProgress from "@/components/ui/scroll-progress"
 export default function Home() {
   const [loaderDone, setLoaderDone] = useState(false)
 
@@ -23,6 +24,7 @@ export default function Home() {
   return (
     <>
       <Cursor />
+      <ScrollProgress />
       {!loaderDone && (
         <Loader onComplete={() => setLoaderDone(true)} />
       )}

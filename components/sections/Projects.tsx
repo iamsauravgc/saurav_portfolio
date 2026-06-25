@@ -1,7 +1,8 @@
 "use client"
 
-import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
+import { motion } from "framer-motion"
+import SectionReveal from "@/components/ui/section-reveal"
+import { staggerParent, staggerChild } from "@/lib/animation"
 import { HoverExpand, type HoverExpandItem } from "@/components/unlumen-ui/hover-expand"
 
 const projects: (HoverExpandItem & { tags: string[]; link: string })[] = [
@@ -43,26 +44,7 @@ const projects: (HoverExpandItem & { tags: string[]; link: string })[] = [
   },
 ]
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.15 },
-  },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.23, 1, 0.32, 1] as const },
-  },
-}
-
 export default function Projects() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const isInView = useInView(sectionRef, { once: true, margin: "-80px" })
-
   const items: HoverExpandItem[] = projects.map((p) => ({
     label: p.label,
     sublabel: p.sublabel,
@@ -72,17 +54,14 @@ export default function Projects() {
   }))
 
   return (
-    <motion.section
-      ref={sectionRef}
-      id="projects"
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+    <SectionReveal
+      variant="fadeScale"
       style={{
         padding: "clamp(80px, 12vh, 140px) clamp(24px, 6vw, 80px)",
         background: "var(--color-bg)",
       }}
     >
+      <section id="projects">
       <div style={{ maxWidth: "900px", margin: "0 auto" }}>
         <motion.h2
           initial={{ opacity: 0, y: 16 }}
@@ -92,7 +71,7 @@ export default function Projects() {
             visible: {
               opacity: 1,
               y: 0,
-              transition: { duration: 0.5, ease: [0.23, 1, 0.32, 1] },
+              transition: { duration: 0.5, ease: [0.23, 1, 0.32, 1] as const },
             },
           }}
           style={{
@@ -107,13 +86,14 @@ export default function Projects() {
         </motion.h2>
 
         <motion.div
-          variants={containerVariants}
+          variants={staggerParent}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
           style={{ marginTop: "48px" }}
         >
           {items.map((item, i) => (
-            <motion.div key={i} variants={itemVariants}>
+            <motion.div key={i} variants={staggerChild}>
               <HoverExpand
                 items={[item]}
                 startIndex={i}
@@ -162,6 +142,7 @@ export default function Projects() {
           </a>
         </motion.div>
       </div>
-    </motion.section>
+      </section>
+    </SectionReveal>
   )
 }

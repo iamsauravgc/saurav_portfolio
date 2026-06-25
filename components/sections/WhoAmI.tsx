@@ -1,7 +1,8 @@
 "use client"
 
-import { useRef, useState, useEffect } from "react"
-import { motion, useInView, AnimatePresence } from "framer-motion"
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import SectionReveal from "@/components/ui/section-reveal"
 import { IconCloud } from "@/components/ui/icon-cloud"
 
 const titles = [
@@ -24,8 +25,6 @@ const slugs = [
 ]
 
 export default function WhoAmI() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const isInView = useInView(sectionRef, { once: true, margin: "-80px" })
   const images = slugs.map((slug) => `/images/tech/${slug}.svg`)
   const [titleIndex, setTitleIndex] = useState(0)
 
@@ -37,17 +36,14 @@ export default function WhoAmI() {
   }, [])
 
   return (
-    <motion.section
-      ref={sectionRef}
-      id="whoami"
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+    <SectionReveal
+      variant="fadeBlur"
       style={{
         padding: "clamp(80px, 12vh, 140px) clamp(24px, 6vw, 80px)",
         background: "var(--color-bg)",
       }}
     >
+      <section id="whoami">
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
         <motion.span
           initial={{ opacity: 0, y: 12 }}
@@ -146,15 +142,9 @@ export default function WhoAmI() {
           </motion.div>
         </div>
 
-        <style>{`
-          @media (max-width: 900px) {
-            .about-grid {
-              flex-direction: column !important;
-              gap: 40px !important;
-            }
-          }
-        `}</style>
+
       </div>
-    </motion.section>
+      </section>
+    </SectionReveal>
   )
 }

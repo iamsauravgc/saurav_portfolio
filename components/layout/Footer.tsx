@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
+import SectionReveal from "@/components/ui/section-reveal"
 import { SOCIAL } from "@/lib/constants"
 
 const FOOTER_LINKS = [
@@ -12,12 +13,13 @@ const FOOTER_LINKS = [
 
 export default function Footer() {
   return (
-    <footer
-      style={{
-        width: "100%",
-        padding: "80px 40px 48px",
-      }}
-    >
+    <SectionReveal variant="fadeUp">
+      <footer
+        style={{
+          width: "100%",
+          padding: "80px 40px 48px",
+        }}
+      >
       <div
         style={{
           maxWidth: "700px",
@@ -95,6 +97,7 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+    </SectionReveal>
   )
 }
 
