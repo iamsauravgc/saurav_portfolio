@@ -13,6 +13,8 @@ export default function HopeObject() {
   const prefersReducedMotion = usePrefersReducedMotion()
   const { scrollY } = useScroll()
   const parallaxY = useTransform(scrollY, [0, 500], [0, -50])
+  const scrollOpacity = useTransform(scrollY, [0, 400], [1, 0.15])
+  const scrollScale = useTransform(scrollY, [0, 400], [1, 0.78])
 
   return (
     <motion.div
@@ -22,6 +24,8 @@ export default function HopeObject() {
         left,
         zIndex: z,
         y: prefersReducedMotion ? 0 : parallaxY,
+        opacity: prefersReducedMotion ? 1 : scrollOpacity,
+        scale: prefersReducedMotion ? 1 : scrollScale,
       }}
     >
       <motion.div

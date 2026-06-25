@@ -1,10 +1,9 @@
 import type { Metadata } from "next"
-import { JetBrains_Mono, Reenie_Beanie, Geist_Mono, Manrope } from "next/font/google"
+import { JetBrains_Mono, Reenie_Beanie, Geist_Mono } from "next/font/google"
 import localFont from "next/font/local"
 import Dot from "@/components/animata/background/dot"
 import "./globals.css"
 
-const manrope = Manrope({ subsets: ["latin"], weight: ["200", "300", "400", "500", "600"] })
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" })
 const geistMono = Geist_Mono({ subsets: ["latin"], weight: "400", variable: "--font-geist-mono" })
 const reenieBeanie = Reenie_Beanie({ subsets: ["latin"], weight: "400", variable: "--font-handwritten" })

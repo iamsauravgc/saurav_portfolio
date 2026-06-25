@@ -16,6 +16,8 @@ export function VinylPlayer() {
   const { scrollY } = useScroll();
   const parallaxY = useTransform(scrollY, [0, 500], [0, -80]);
   const scrollRotate = useTransform(scrollY, [0, 500], [0, 15]);
+  const scrollOpacity = useTransform(scrollY, [0, 400], [1, 0.2]);
+  const scrollScale = useTransform(scrollY, [0, 400], [1, 0.78]);
 
   useEffect(() => {
     const audio = new Audio("/sounds/solo.mp3");
@@ -53,6 +55,8 @@ export function VinylPlayer() {
         height: 370,
         zIndex: z,
         y: prefersReducedMotion ? 0 : parallaxY,
+        opacity: prefersReducedMotion ? 1 : scrollOpacity,
+        scale: prefersReducedMotion ? 1 : scrollScale,
       }}
     >
       <motion.div

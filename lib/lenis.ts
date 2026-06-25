@@ -23,7 +23,3 @@ export function initLenis() {
   return lenisInstance
 }
 
-export function destroyLenis() {
-  lenisInstance?.destroy()
-  lenisInstance = null
-}

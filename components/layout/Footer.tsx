@@ -51,7 +51,7 @@ export default function Footer() {
               color: "var(--color-text-secondary)",
             }}
           >
-            designed &amp; built with ☕️ and Frank Ocean loops
+            crafted with coffee and code
           </span>
         </div>
 
@@ -91,17 +91,6 @@ export default function Footer() {
           >
             <span style={{ fontSize: "24px", lineHeight: 1, marginRight: "4px", display: "inline-block" }}>🌊</span>
             &ldquo;I'm sure we're taller in another dimension.&rdquo;
-          </p>
-          <p
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "11px",
-              color: "var(--color-text-secondary)",
-              textAlign: "center",
-              margin: 0,
-            }}
-          >
-            — Frank Ocean
           </p>
         </div>
       </div>

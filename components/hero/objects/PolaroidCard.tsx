@@ -14,6 +14,8 @@ export default function PolaroidCard() {
   const prefersReducedMotion = usePrefersReducedMotion()
   const { scrollY } = useScroll()
   const parallaxY = useTransform(scrollY, [0, 500], [0, -70])
+  const scrollOpacity = useTransform(scrollY, [0, 400], [1, 0.25])
+  const scrollScale = useTransform(scrollY, [0, 400], [1, 0.82])
 
   return (
     <motion.div
@@ -23,6 +25,8 @@ export default function PolaroidCard() {
         right,
         zIndex: z,
         y: prefersReducedMotion ? 0 : parallaxY,
+        opacity: prefersReducedMotion ? 1 : scrollOpacity,
+        scale: prefersReducedMotion ? 1 : scrollScale,
       }}
     >
       <motion.div

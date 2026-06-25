@@ -27,6 +27,8 @@ export interface HoverExpandProps {
    * @default 320
    */
   expandedHeight?: number;
+  /** Starting index for numbering (e.g. 0-based offset for multi-instance lists) */
+  startIndex?: number;
   className?: string;
 }
 
@@ -34,6 +36,7 @@ export function HoverExpand({
   items,
   collapsedHeight = 68,
   expandedHeight = 320,
+  startIndex = 0,
   className,
 }: HoverExpandProps) {
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
@@ -109,25 +112,26 @@ export function HoverExpand({
                   loading="lazy"
                   decoding="async"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/5" />
               </motion.div>
 
-              <div className="absolute inset-0 flex items-end px-5 pb-4">
+              <div className="absolute inset-0 flex flex-col justify-end px-5 pb-5">
                 <div className="flex w-full items-end justify-between gap-4">
                   <div className="flex items-baseline gap-3 min-w-0">
                     <motion.span
-                      className="text-xs tabular-nums shrink-0 opacity-40"
+                      className="text-base shrink-0 opacity-40"
+                      style={{ fontFamily: "var(--font-accent)" }}
                       animate={{
                         color: isActive ? "#ffffff" : "currentColor",
                         opacity: isActive ? 0.5 : 0.4,
                       }}
                       transition={{ duration: 0.2 }}
                     >
-                      {String(i + 1).padStart(2, "0")}
+                      {String(startIndex + i + 1).padStart(2, "0")}
                     </motion.span>
 
                     <motion.span
-                      className="font-semibold tracking-tight truncate"
+                      className="font-semibold tracking-tight"
                       style={{ fontSize: "clamp(1.1rem, 2.2vw, 1.5rem)" }}
                       animate={{
                         color: isActive ? "#ffffff" : "currentColor",
@@ -137,40 +141,42 @@ export function HoverExpand({
                       {item.label}
                     </motion.span>
 
-                    {item.description && (
+                    {item.sublabel && (
                       <motion.span
-                        className="text-sm text-white/70 truncate hidden sm:block"
-                        initial={{ opacity: 0, x: -8 }}
+                        className="text-xs tracking-widest uppercase shrink-0"
                         animate={{
-                          opacity: isActive ? 1 : 0,
-                          x: isActive ? 0 : -8,
+                          color: isActive
+                            ? "rgba(255,255,255,0.55)"
+                            : "currentColor",
+                          opacity: isActive ? 1 : 0.45,
                         }}
-                        transition={{
-                          duration: 0.3,
-                          delay: isActive ? 0.12 : 0,
-                          ease: [0.23, 1, 0.32, 1],
-                        }}
+                        transition={{ duration: 0.2 }}
                       >
-                        — {item.description}
+                        {item.sublabel}
                       </motion.span>
                     )}
                   </div>
-
-                  {item.sublabel && (
-                    <motion.span
-                      className="text-xs tracking-widest uppercase shrink-0"
-                      animate={{
-                        color: isActive
-                          ? "rgba(255,255,255,0.55)"
-                          : "currentColor",
-                        opacity: isActive ? 1 : 0.45,
-                      }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {item.sublabel}
-                    </motion.span>
-                  )}
                 </div>
+
+                {item.description && (
+                  <motion.div
+                    className="overflow-hidden"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{
+                      height: isActive ? "auto" : 0,
+                      opacity: isActive ? 1 : 0,
+                    }}
+                    transition={{
+                      duration: 0.3,
+                      delay: isActive ? 0.12 : 0,
+                      ease: [0.23, 1, 0.32, 1],
+                    }}
+                  >
+                    <span className="text-sm text-white/70 line-clamp-2 mt-2 block px-1">
+                      {item.description}
+                    </span>
+                  </motion.div>
+                )}
               </div>
             </motion.div>
 

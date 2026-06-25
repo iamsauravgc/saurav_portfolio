@@ -34,6 +34,8 @@ export default function HeroSection({ loaderDone }: HeroSectionProps) {
   const { scrollY } = useScroll()
   const scrollOpacity = useTransform(scrollY, [0, 120], [1, 0])
   const scrollScale = useTransform(scrollY, [0, 200], [1, 0.96])
+  const scrollYOffset = useTransform(scrollY, [0, 300], [0, 60])
+  const scrollBlur = useTransform(scrollY, [0, 300], [0, 4])
 
   return (
     <section
@@ -52,7 +54,6 @@ export default function HeroSection({ loaderDone }: HeroSectionProps) {
         padding: "120px 40px 80px",
       }}
     >
-      {/* Objects — visible on all screens, scaled on mobile */}
       {loaderDone && (
         <div className="hero-objects-wrapper">
           <PhoneObject />
@@ -64,7 +65,6 @@ export default function HeroSection({ loaderDone }: HeroSectionProps) {
         </div>
       )}
 
-      {/* Text content — centered */}
       {loaderDone && (
         <motion.div
           variants={staggerVariants}
@@ -88,7 +88,6 @@ export default function HeroSection({ loaderDone }: HeroSectionProps) {
             pointerEvents: "none",
           }}
         >
-          {/* Handwritten greeting */}
           <motion.p
             variants={lineVariants}
             style={{
@@ -97,12 +96,12 @@ export default function HeroSection({ loaderDone }: HeroSectionProps) {
               color: "#B5654A",
               margin: 0,
               lineHeight: 1.2,
+              y: scrollYOffset,
             }}
           >
             hey there
           </motion.p>
 
-          {/* Lead sentence */}
           <motion.p
             variants={lineVariants}
             style={{
@@ -113,12 +112,13 @@ export default function HeroSection({ loaderDone }: HeroSectionProps) {
               lineHeight: 1.5,
               margin: 0,
               letterSpacing: "0.01em",
+              filter: `blur(${scrollBlur}px)`,
+              y: scrollYOffset,
             }}
           >
             Hi, I&apos;m Saurav — I turn ideas into things you click.
           </motion.p>
 
-          {/* Tagline */}
           <motion.p
             variants={lineVariants}
             style={{
@@ -128,6 +128,8 @@ export default function HeroSection({ loaderDone }: HeroSectionProps) {
               color: "var(--color-text-muted)",
               margin: 0,
               letterSpacing: "0.03em",
+              filter: `blur(${scrollBlur}px)`,
+              y: scrollYOffset,
             }}
           >
             student · developer · maker
@@ -135,7 +137,6 @@ export default function HeroSection({ loaderDone }: HeroSectionProps) {
         </motion.div>
       )}
 
-      {/* Scroll indicator */}
       {loaderDone && (
         <motion.div
           variants={lineVariants}
