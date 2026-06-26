@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { JetBrains_Mono, Reenie_Beanie, Geist_Mono } from "next/font/google"
 import localFont from "next/font/local"
 import Dot from "@/components/animata/background/dot"
+import { SmoothScrollProvider } from "@/components/SmoothScrollProvider"
 import "./globals.css"
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" })
@@ -15,9 +16,13 @@ const historiaSky = localFont({
 })
 
 export const metadata: Metadata = {
-  title: "Saurav G.C. — CS & AI/ML Engineer",
+  title: "Saurav G.C.",
   description: "I turn ideas into things you can click. CS student, AI/ML, Kathmandu, Nepal.",
   metadataBase: new URL("https://saurav.com.np"),
+  icons: {
+    icon: "/icon.png",
+    apple: "/icon.png",
+  },
   openGraph: {
     title: "Saurav G.C.",
     description: "I turn ideas into things you can click.",
@@ -33,9 +38,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${jetbrainsMono.variable} ${geistMono.variable} ${reenieBeanie.variable} ${historiaSky.variable}`}>
       <body>
-        <Dot color="rgba(0,0,0,0.12)" size={1.2} spacing={10} style={{ backgroundColor: "var(--color-bg)", minHeight: "100vh" }}>
-          {children}
-        </Dot>
+        <SmoothScrollProvider>
+          <Dot color="rgba(0,0,0,0.12)" size={1.2} spacing={10} style={{ backgroundColor: "var(--color-bg)", minHeight: "100vh" }}>
+            {children}
+          </Dot>
+        </SmoothScrollProvider>
       </body>
     </html>
   )

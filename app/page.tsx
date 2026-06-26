@@ -1,7 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { initLenis } from "@/lib/lenis"
+import { useState } from "react"
 
 import Cursor from "@/components/Cursor"
 import Loader from "@/components/Loader"
@@ -12,14 +11,6 @@ import Projects from "@/components/sections/Projects"
 import ScrollProgress from "@/components/ui/scroll-progress"
 export default function Home() {
   const [loaderDone, setLoaderDone] = useState(false)
-
-  useEffect(() => {
-    if (!loaderDone) return
-    const timer = setTimeout(() => {
-      initLenis()
-    }, 100)
-    return () => clearTimeout(timer)
-  }, [loaderDone])
 
   return (
     <>

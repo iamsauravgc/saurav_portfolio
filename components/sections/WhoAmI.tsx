@@ -2,18 +2,17 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import SectionReveal from "@/components/ui/section-reveal"
+import { SectionTransition } from "@/components/ui/section-transition"
 import { IconCloud } from "@/components/ui/icon-cloud"
 
 const titles = [
   "CS/AI student,",
   "builder,",
-  "designer,",
   "curious nerd,",
   "explorer.",
 ]
 const bioBody = [
-  "working at the point where machine learning meets actual product thinking. Based in Kathmandu, Nepal — usually somewhere between a forecasting model and an argument with himself over Figma margins.",
+  "working at the point where machine learning meets actual product thinking. Based in Kathmandu, Nepal — usually somewhere between a forecasting model and a dataset that refuses to cooperate.",
   "Full-stack by training, AI/ML by current obsession. He's equally interested in whether a model performs well and whether the thing built around it feels right to use — most tools fail at the second part.",
   "Guided by curiosity more than a fixed plan. Outside of that: Frank Ocean on repeat, narrative non-fiction about psychology and power, and a Nikon he means to carry more than he actually does.",
 ]
@@ -36,11 +35,9 @@ export default function WhoAmI() {
   }, [])
 
   return (
-    <SectionReveal
-      variant="fadeBlur"
+    <SectionTransition
       style={{
         padding: "clamp(80px, 12vh, 140px) clamp(24px, 6vw, 80px)",
-        background: "var(--color-bg)",
       }}
     >
       <section id="whoami">
@@ -145,6 +142,6 @@ export default function WhoAmI() {
 
       </div>
       </section>
-    </SectionReveal>
+    </SectionTransition>
   )
 }

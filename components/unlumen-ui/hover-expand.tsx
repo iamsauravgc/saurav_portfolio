@@ -1,67 +1,32 @@
 "use client";
 
 import * as React from "react";
-import { motion } from "motion/react";
-
+import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 
 export interface HoverExpandItem {
   label: string;
-  /** e.g. country, year, category */
   sublabel?: string;
   image: string;
   imageAlt?: string;
-  /** short descriptor shown when expanded */
-  description?: string;
+  tags?: string[];
+  link?: string;
 }
 
 export interface HoverExpandProps {
   items: HoverExpandItem[];
-  /**
-   * Row height when collapsed, in pixels.
-   * @default 68
-   */
-  collapsedHeight?: number;
-  /**
-   * Row height when expanded, in pixels.
-   * @default 320
-   */
-  expandedHeight?: number;
-  /** Starting index for numbering (e.g. 0-based offset for multi-instance lists) */
-  startIndex?: number;
+  rowHeight?: number;
   className?: string;
 }
 
-export function HoverExpand({
-  items,
-  collapsedHeight = 68,
-  expandedHeight = 320,
-  startIndex = 0,
-  className,
-}: HoverExpandProps) {
-  const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
-  const [tappedIndex, setTappedIndex] = React.useState<number | null>(null);
-
-  const activeIndex = hoveredIndex ?? tappedIndex;
-
-  const handleTap = (i: number) => {
-    setTappedIndex(tappedIndex === i ? null : i);
-  };
-
-  const handlePointerEnter = (e: React.PointerEvent, i: number) => {
-    if (e.pointerType === "mouse") {
-      setHoveredIndex(i);
-      setTappedIndex(null);
-    }
-  };
-
-  const handlePointerLeave = (e: React.PointerEvent) => {
-    if (e.pointerType === "mouse") setHoveredIndex(null);
-  };
+export function HoverExpand({ items, rowHeight = 110, className }: HoverExpandProps) {
+  const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
 
   return (
-    <div className={cn("flex flex-col w-full", className)}>
-      <div className="w-full border-t border-current opacity-15" />
+    <div
+      className={cn("relative w-full", className)}
+    >
+      <div style={{ width: "100%", borderTop: "1px solid var(--color-border)" }} />
 
       {items.map((item, i) => {
         const isActive = activeIndex === i;
@@ -69,121 +34,117 @@ export function HoverExpand({
 
         return (
           <React.Fragment key={i}>
-            <motion.div
-              className="relative w-full overflow-hidden cursor-default"
-              animate={{
-                height: isActive ? expandedHeight : collapsedHeight,
-                opacity: isOtherActive ? 0.38 : 1,
-              }}
-              transition={{
-                height: {
-                  type: "spring",
-                  stiffness: 280,
-                  damping: 32,
-                  mass: 0.9,
-                },
-                opacity: { duration: 0.22, ease: "easeOut" },
-              }}
-              onPointerEnter={(e) => handlePointerEnter(e, i)}
-              onPointerLeave={handlePointerLeave}
-              onClick={() => handleTap(i)}
-              onKeyDown={(e: React.KeyboardEvent) => {
-                if (e.key === "Enter" || e.key === " ") handleTap(i);
-              }}
-              role="button"
-              tabIndex={0}
+            <div
+              className="relative w-full cursor-pointer"
+              style={{ height: rowHeight }}
+              onMouseEnter={() => setActiveIndex(i)}
+              onMouseLeave={() => setActiveIndex(null)}
+              onClick={() => item.link && window.open(item.link, "_blank")}
             >
-              <motion.div
-                className="absolute inset-0 w-full h-full"
-                initial={false}
-                animate={{
-                  opacity: isActive ? 1 : 0,
-                  scale: isActive ? 1 : 1.06,
-                }}
-                transition={{
-                  opacity: { duration: 0.45, ease: [0.23, 1, 0.32, 1] },
-                  scale: { duration: 0.55, ease: [0.23, 1, 0.32, 1] },
-                }}
-              >
-                <img
-                  src={item.image}
-                  alt={item.imageAlt ?? ""}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/5" />
-              </motion.div>
-
-              <div className="absolute inset-0 flex flex-col justify-end px-5 pb-5">
-                <div className="flex w-full items-end justify-between gap-4">
-                  <div className="flex items-baseline gap-3 min-w-0">
-                    <motion.span
-                      className="text-base shrink-0 opacity-40"
-                      style={{ fontFamily: "var(--font-accent)" }}
-                      animate={{
-                        color: isActive ? "#ffffff" : "#2B2521",
-                        opacity: isActive ? 0.5 : 0.4,
+              <div style={{ display: "flex", height: "100%", padding: "0 8px" }}>
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", minWidth: 0 }}>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "16px" }}>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-accent)",
+                        fontSize: "14px",
+                        color: "var(--color-text-muted)",
+                        flexShrink: 0,
                       }}
-                      transition={{ duration: 0.2 }}
                     >
-                      {String(startIndex + i + 1).padStart(2, "0")}
-                    </motion.span>
+                      {String(i + 1).padStart(2, "0")}.
+                    </span>
 
                     <motion.span
-                      className="font-semibold tracking-tight"
-                      style={{ fontSize: "clamp(1.1rem, 2.2vw, 1.5rem)" }}
-                      animate={{
-                        color: isActive ? "#ffffff" : "#2B2521",
+                      style={{
+                        fontWeight: 500,
+                        fontSize: "clamp(1.1rem, 1.8vw, 1.4rem)",
+                        letterSpacing: "-0.02em",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
                       }}
-                      transition={{ duration: 0.2 }}
+                      animate={{
+                        color: isActive ? "var(--color-accent)" : "var(--color-text-primary)",
+                        opacity: isOtherActive ? 0.35 : 1,
+                      }}
+                      transition={{ duration: 0.25 }}
                     >
                       {item.label}
+                      {isActive && item.link && (
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                          <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" />
+                        </svg>
+                      )}
                     </motion.span>
-
-                    {item.sublabel && (
-                      <motion.span
-                        className="text-xs tracking-widest uppercase shrink-0"
-                        animate={{
-                          color: isActive
-                            ? "rgba(255,255,255,0.55)"
-                            : "#2B2521",
-                          opacity: isActive ? 1 : 0.45,
-                        }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {item.sublabel}
-                      </motion.span>
-                    )}
                   </div>
-                </div>
 
-                {item.description && (
                   <motion.div
-                    className="overflow-hidden"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{
-                      height: isActive ? "auto" : 0,
-                      opacity: isActive ? 1 : 0,
+                    style={{
+                      display: "flex",
+                      gap: "8px",
+                      fontSize: "clamp(12px, 1.2vw, 13px)",
+                      color: "var(--color-text-secondary)",
+                      marginTop: "2px",
+                      marginLeft: "calc(2.5rem)",
                     }}
-                    transition={{
-                      duration: 0.3,
-                      delay: isActive ? 0.12 : 0,
-                      ease: [0.23, 1, 0.32, 1],
-                    }}
+                    animate={{ opacity: isOtherActive ? 0.4 : 0.8 }}
                   >
-                    <span className="text-sm text-white/70 line-clamp-2 mt-2 block px-1">
-                      {item.description}
-                    </span>
+                    {item.tags?.map((tag, idx) => (
+                      <span key={idx} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        {idx > 0 && <span style={{ opacity: 0.5, color: "var(--color-text-secondary)" }}>●</span>}
+                        {tag}
+                      </span>
+                    ))}
                   </motion.div>
-                )}
+                </div>
               </div>
-            </motion.div>
-
-            <div className="w-full border-t border-current opacity-15" />
+            </div>
+            <div style={{ width: "100%", borderTop: "1px solid var(--color-border)" }} />
           </React.Fragment>
         );
       })}
+
+      {/* Floating preview panel — follows the active row */}
+      <AnimatePresence>
+        {activeIndex !== null && (
+          <FloatingImage
+            item={items[activeIndex]}
+            top={activeIndex * (rowHeight + 1)}
+          />
+        )}
+      </AnimatePresence>
     </div>
+  );
+}
+
+function FloatingImage({ item, top }: { item: HoverExpandItem; top: number }) {
+  const [natural, setNatural] = React.useState<{ w: number; h: number } | null>(null);
+  const panelWidth = 420;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.92 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.92 }}
+      transition={{ duration: 0.25, ease: [0.23, 1, 0.32, 1] }}
+      className="hidden md:block absolute pointer-events-none z-10"
+      style={{
+        right: "0px",
+        top,
+        width: panelWidth,
+        height: natural ? panelWidth * (natural.h / natural.w) : 240,
+      }}
+    >
+      <img
+        src={item.image}
+        alt={item.imageAlt ?? ""}
+        onLoad={(e) => {
+          const img = e.currentTarget;
+          setNatural({ w: img.naturalWidth, h: img.naturalHeight });
+        }}
+        className="w-full h-full object-contain rounded-md shadow-2xl bg-white"
+      />
+    </motion.div>
   );
 }

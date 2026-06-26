@@ -71,6 +71,19 @@ export default function Footer() {
           ))}
         </div>
 
+        {/* Status */}
+        <div style={{ textAlign: "center" }}>
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "13px",
+              color: "var(--color-text-muted)",
+            }}
+          >
+            open to work · open to ideas
+          </span>
+        </div>
+
         {/* Lyric with larger wave */}
         <div
           style={{
