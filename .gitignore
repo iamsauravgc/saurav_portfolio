@@ -48,6 +48,8 @@ design.md
 epics.md
 prd.md
 tech.md
+.agents/
+skills-lock.json
 desktop.ini
 
 # Environment
