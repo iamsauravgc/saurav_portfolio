@@ -41,6 +41,7 @@ export function IconCloud({ icons, images, size = 500, iconSize = 56 }: IconClou
   const rotationRef = useRef({ x: 0, y: 0 })
   const iconCanvasesRef = useRef<HTMLCanvasElement[]>([])
   const imagesLoadedRef = useRef<boolean[]>([])
+  const isVisibleRef = useRef(true)
 
   // Create icon canvases once when icons/images change
   useEffect(() => {
@@ -215,6 +216,18 @@ export function IconCloud({ icons, images, size = 500, iconSize = 56 }: IconClou
     setIsDragging(false)
   }
 
+  // Pause animation when off-screen
+  useEffect(() => {
+    const el = canvasRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { isVisibleRef.current = entry.isIntersecting },
+      { threshold: 0 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   // Animation and rendering
   useEffect(() => {
     const canvas = canvasRef.current
@@ -300,7 +313,9 @@ export function IconCloud({ icons, images, size = 500, iconSize = 56 }: IconClou
 
           ctx.restore()
         })
-        animationFrameRef.current = requestAnimationFrame(animate)
+        if (isVisibleRef.current) {
+          animationFrameRef.current = requestAnimationFrame(animate)
+        }
       }
 
       animate()

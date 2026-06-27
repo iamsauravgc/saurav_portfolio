@@ -17,8 +17,14 @@ export function useSmoothScroll() {
 
     lenis.on("scroll", ScrollTrigger.update)
 
+    let lastScroll = Date.now()
+    const onScroll = () => { lastScroll = Date.now() }
+    window.addEventListener("scroll", onScroll, { passive: true })
+
     gsap.ticker.add((time) => {
-      lenis.raf(time * 1000)
+      if (Date.now() - lastScroll < 3000) {
+        lenis.raf(time * 1000)
+      }
     })
     gsap.ticker.lagSmoothing(0)
 
@@ -28,6 +34,7 @@ export function useSmoothScroll() {
     return () => {
       lenis.destroy()
       window.removeEventListener("load", refresh)
+      window.removeEventListener("scroll", onScroll)
     }
   }, [])
 }
