@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useTransform } from "framer-motion";
 import { useScrollY } from "@/lib/scroll-context";
 import { heroLayout } from "@/lib/heroLayout";
@@ -15,6 +15,7 @@ interface VinylPlayerProps {
 export function VinylPlayer({ isMobile }: VinylPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const previewUrlRef = useRef<string | null>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
   const scrollY = useScrollY();
   const parallaxY = useTransform(scrollY, [0, 500], [0, -80]);
@@ -26,34 +27,51 @@ export function VinylPlayer({ isMobile }: VinylPlayerProps) {
   const disableParallax = prefersReducedMotion || isMobile
   const disableEffects = prefersReducedMotion
 
-  const audioLoadedRef = useRef(false);
-
-  const togglePlay = useCallback(async () => {
-    if (!audioRef.current) {
-      const audio = new Audio("/sounds/solo.mp3");
-      audio.preload = "none";
-      audioRef.current = audio;
-      audio.addEventListener("ended", () => setIsPlaying(false));
-    }
-    const audio = audioRef.current;
-    if (!audioLoadedRef.current) {
-      audio.load();
-      audioLoadedRef.current = true;
-    }
-    if (!audio.paused) {
-      audio.pause();
-      setIsPlaying(false);
-    } else {
-      try {
-        await audio.play();
-        setIsPlaying(true);
-      } catch (err) {
-        if (err instanceof Error && err.name !== "AbortError") {
-          console.warn("Audio playback failed:", err.message);
+  useEffect(() => {
+    fetch("https://itunes.apple.com/search?term=frank+ocean+white+ferrari&entity=song&limit=10")
+      .then(r => r.json())
+      .then(data => {
+        const track = data.results?.find(
+          (r: any) =>
+            r.artistName?.toLowerCase().includes("frank ocean") &&
+            r.trackName.startsWith("White Ferrari")
+        );
+        if (track?.previewUrl) {
+          previewUrlRef.current = track.previewUrl;
+          const audio = new Audio();
+          audio.crossOrigin = "anonymous";
+          audio.preload = "auto";
+          audio.src = track.previewUrl;
+          audio.addEventListener("ended", () => setIsPlaying(false));
+          audioRef.current = audio;
         }
-      }
-    }
+      })
+      .catch(() => {});
   }, []);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isPlaying) {
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    } else {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  }, [isPlaying]);
+
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = "";
+      }
+    };
+  }, []);
+
+  const togglePlay = () => setIsPlaying(prev => !prev);
 
   return (
     <motion.div

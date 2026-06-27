@@ -67,7 +67,7 @@ export default function LaptopObject({ isMobile }: LaptopObjectProps) {
             alt="Sticker laptop"
             width={parseInt(width.toString())}
             height={Math.round(width * 618 / 805)}
-            style={{ width: "100%", height: "auto", display: "block" }}
+            style={{ display: "block" }}
           />
         </motion.div>
       </motion.div>

@@ -44,9 +44,8 @@ export default function MobileCaution() {
             <span
               style={{
                 fontFamily: "var(--font-body)",
-                fontSize: "clamp(12px, 3vw, 14px)",
-                color: "#fff",
-                opacity: 0.85,
+                fontSize: "clamp(13px, 3.5vw, 16px)",
+                color: "#2C1810",
                 lineHeight: 1.4,
               }}
             >

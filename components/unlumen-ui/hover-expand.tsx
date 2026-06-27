@@ -32,6 +32,8 @@ export function HoverExpand({ items, rowHeight = 110, className }: HoverExpandPr
             <img
               src={item.image}
               alt={item.imageAlt ?? item.label}
+              width={800}
+              height={450}
               loading="lazy"
               style={{
                 width: "100%",
