@@ -29,13 +29,13 @@ export default function Loader({ onComplete }: LoaderProps) {
     timer.current = window.setInterval(() => {
       count.current++
       setOrder((prev) => shuffle(prev))
-      if (count.current >= 5) {
+      if (count.current >= 2) {
         if (timer.current) window.clearInterval(timer.current)
         setTimeout(() => {
           setShow(false)
           document.body.style.overflow = ""
           onComplete()
-        }, 400)
+        }, 200)
       }
     }, 500)
     return () => {

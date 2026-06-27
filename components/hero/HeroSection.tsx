@@ -6,12 +6,12 @@ import { motion, useTransform, type Variants } from "framer-motion"
 import { useScrollY } from "@/lib/scroll-context"
 import { useIsMobile } from "@/hooks/useIsMobile"
 
-const PhoneObject = dynamic(() => import("@/components/hero/objects/PhoneObject"), { ssr: false })
-const VinylPlayer = dynamic(() => import("@/components/hero/objects/VinylPlayer").then((m) => ({ default: m.VinylPlayer })), { ssr: false })
-const LaptopObject = dynamic(() => import("@/components/hero/objects/LaptopObject"), { ssr: false })
-const PolaroidCard = dynamic(() => import("@/components/hero/objects/PolaroidCard"), { ssr: false })
-const CamObject = dynamic(() => import("@/components/hero/objects/CamObject"), { ssr: false })
-const HopeObject = dynamic(() => import("@/components/hero/objects/HopeObject"), { ssr: false })
+const PhoneObject = dynamic(() => import("@/components/hero/objects/PhoneObject"))
+const VinylPlayer = dynamic(() => import("@/components/hero/objects/VinylPlayer").then((m) => ({ default: m.VinylPlayer })))
+const LaptopObject = dynamic(() => import("@/components/hero/objects/LaptopObject"))
+const PolaroidCard = dynamic(() => import("@/components/hero/objects/PolaroidCard"))
+const CamObject = dynamic(() => import("@/components/hero/objects/CamObject"))
+const HopeObject = dynamic(() => import("@/components/hero/objects/HopeObject"))
 
 interface HeroSectionProps {
   loaderDone: boolean

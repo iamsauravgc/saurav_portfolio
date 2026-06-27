@@ -23,20 +23,13 @@ export default function Home() {
       {!loaderDone && (
         <Loader onComplete={() => setLoaderDone(true)} />
       )}
-      <div
-        style={{
-          opacity: loaderDone ? 1 : 0,
-          transition: "opacity 0.6s ease-out",
-        }}
-      >
-        <MobileCaution />
-        <main>
-          <HeroSection loaderDone={loaderDone} />
-          <WhoAmI />
-          <Projects />
-        </main>
-        <Footer />
-      </div>
+      <MobileCaution />
+      <main>
+        <HeroSection loaderDone={loaderDone} />
+        <WhoAmI />
+        <Projects />
+      </main>
+      <Footer />
     </>
   )
 }

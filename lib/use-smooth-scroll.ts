@@ -18,23 +18,38 @@ export function useSmoothScroll() {
     lenis.on("scroll", ScrollTrigger.update)
 
     let lastScroll = Date.now()
-    const onScroll = () => { lastScroll = Date.now() }
+    let rafId: number | null = null
+    let isIdle = false
+
+    const startRAF = () => {
+      isIdle = false
+      const tick = (time: number) => {
+        if (Date.now() - lastScroll < 3000) {
+          lenis.raf(time)
+          rafId = requestAnimationFrame(tick)
+        } else {
+          isIdle = true
+          rafId = null
+        }
+      }
+      rafId = requestAnimationFrame(tick)
+    }
+
+    const onScroll = () => {
+      lastScroll = Date.now()
+      if (isIdle || rafId === null) {
+        startRAF()
+      }
+    }
     window.addEventListener("scroll", onScroll, { passive: true })
 
-    let rafId: number
-    const raf = (time: number) => {
-      if (Date.now() - lastScroll < 3000) {
-        lenis.raf(time)
-      }
-      rafId = requestAnimationFrame(raf)
-    }
-    rafId = requestAnimationFrame(raf)
+    startRAF()
 
     const refresh = () => ScrollTrigger.refresh()
     window.addEventListener("load", refresh)
 
     return () => {
-      cancelAnimationFrame(rafId)
+      if (rafId !== null) cancelAnimationFrame(rafId)
       lenis.destroy()
       window.removeEventListener("load", refresh)
       window.removeEventListener("scroll", onScroll)

@@ -45,6 +45,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${jetbrainsMono.variable} ${geistMono.variable} ${reenieBeanie.variable} ${historiaSky.variable} ${ndot55.variable}`}>
       <body>
+        <link rel="preload" href="/images/vinyl.png" as="image" />
+        <link rel="preload" href="/images/blonde.jpeg" as="image" />
         <ServiceWorkerRegister />
         <SmoothScrollProvider>
           <Dot color="rgba(0,0,0,0.12)" size={1.2} spacing={10} style={{ backgroundColor: "var(--color-bg)", minHeight: "100vh" }}>

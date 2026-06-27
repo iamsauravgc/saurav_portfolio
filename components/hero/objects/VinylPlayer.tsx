@@ -175,7 +175,6 @@ export function VinylPlayer({ isMobile }: VinylPlayerProps) {
                 alt="Vinyl record"
                 width={width}
                 height={width}
-                loading="lazy"
                 className="w-full h-full object-contain"
                 draggable={false}
               />
@@ -197,7 +196,6 @@ export function VinylPlayer({ isMobile }: VinylPlayerProps) {
                     alt="Frank Ocean Blonde"
                     width={104}
                     height={104}
-                    loading="lazy"
                     style={{
                       width: "100%",
                       height: "100%",
