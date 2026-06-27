@@ -54,7 +54,7 @@ export default function PhoneObject({ isMobile }: PhoneObjectProps) {
           transition={{ duration: 0.5, ease: "easeInOut" }}
         >
           <Image
-            src="/images/nothing.png"
+            src="/images/nothing.webp"
             alt="Nothing Phone"
             width={width}
             height={Math.round(width * 276 / 190)}

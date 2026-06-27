@@ -17,30 +17,27 @@ export const SPRING_BOUNCY = {
 export const EASE_OUT_EXPO = [0.23, 1, 0.32, 1] as const
 
 export const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
     transition: { duration: 0.6, ease: EASE_OUT_EXPO },
   },
 }
 
 export const fadeScale: Variants = {
-  hidden: { opacity: 0, scale: 0.93, y: 20 },
+  hidden: { opacity: 0, scale: 0.93 },
   visible: {
     opacity: 1,
     scale: 1,
-    y: 0,
     transition: { duration: 0.7, ease: EASE_OUT_EXPO },
   },
 }
 
 export const fadeBlur: Variants = {
-  hidden: { opacity: 0, scale: 0.96, y: 30, filter: "blur(6px)" },
+  hidden: { opacity: 0, scale: 0.96, filter: "blur(6px)" },
   visible: {
     opacity: 1,
     scale: 1,
-    y: 0,
     filter: "blur(0px)",
     transition: { duration: 0.8, ease: EASE_OUT_EXPO },
   },
@@ -54,10 +51,9 @@ export const staggerParent: Variants = {
 }
 
 export const staggerChild: Variants = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
     transition: { duration: 0.5, ease: EASE_OUT_EXPO },
   },
 }

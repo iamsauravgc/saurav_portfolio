@@ -53,7 +53,7 @@ export default function PolaroidCard({ isMobile }: PolaroidCardProps) {
           style={{ position: "relative", lineHeight: 0 }}
         >
           <Image
-            src="/images/polaroid.png"
+            src="/images/polaroid.webp"
             alt="Polaroid"
             width={width}
             height={Math.round(width * 293 / 220)}

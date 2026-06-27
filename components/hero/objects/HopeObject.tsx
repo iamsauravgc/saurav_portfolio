@@ -55,7 +55,7 @@ export default function HopeObject({ isMobile }: HopeObjectProps) {
           }}
         >
           <Image
-            src="/images/hope.png"
+            src="/images/hope.webp"
             alt="Hope"
             width={width}
             height={Math.round(width * 120 / 170)}

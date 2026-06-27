@@ -55,7 +55,7 @@ export default function CamObject({ isMobile }: CamObjectProps) {
           }}
         >
           <Image
-            src="/images/cam.png"
+            src="/images/cam.webp"
             alt="Nikon Coolpix"
             width={width}
             height={Math.round(width * 225 / 150)}

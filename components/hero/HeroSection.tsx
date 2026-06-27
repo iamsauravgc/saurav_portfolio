@@ -25,10 +25,9 @@ const staggerVariants: Variants = {
 }
 
 const lineVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
     transition: { type: "spring", stiffness: 100, damping: 20, mass: 1 },
   },
 }
@@ -107,7 +106,8 @@ export default function HeroSection({ loaderDone }: HeroSectionProps) {
           </motion.p>
 
           <motion.p
-            variants={lineVariants}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
             style={{
               fontFamily: "var(--font-body)",
               fontWeight: 400,

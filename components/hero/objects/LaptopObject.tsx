@@ -63,7 +63,7 @@ export default function LaptopObject({ isMobile }: LaptopObjectProps) {
           style={{ lineHeight: 0 }}
         >
           <Image
-            src="/images/laptop.png"
+            src="/images/laptop.webp"
             alt="Sticker laptop"
             width={parseInt(width.toString())}
             height={Math.round(width * 618 / 805)}

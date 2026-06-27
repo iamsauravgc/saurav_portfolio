@@ -6,7 +6,7 @@ import { useScrollY } from "@/lib/scroll-context";
 import { heroLayout } from "@/lib/heroLayout";
 import { usePrefersReducedMotion } from "@/hooks/useReducedMotion";
 
-const BLONDE_COVER = "/images/blonde.jpeg"
+const BLONDE_COVER = "/images/blonde.webp"
 
 interface VinylPlayerProps {
   isMobile?: boolean
@@ -15,7 +15,7 @@ interface VinylPlayerProps {
 export function VinylPlayer({ isMobile }: VinylPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const previewUrlRef = useRef<string | null>(null);
+  const audioInitialized = useRef(false);
   const prefersReducedMotion = usePrefersReducedMotion();
   const scrollY = useScrollY();
   const parallaxY = useTransform(scrollY, [0, 500], [0, -80]);
@@ -27,7 +27,9 @@ export function VinylPlayer({ isMobile }: VinylPlayerProps) {
   const disableParallax = prefersReducedMotion || isMobile
   const disableEffects = prefersReducedMotion
 
-  useEffect(() => {
+  const initAudio = () => {
+    if (audioInitialized.current) return;
+    audioInitialized.current = true;
     fetch("https://itunes.apple.com/search?term=frank+ocean+white+ferrari&entity=song&limit=10")
       .then(r => r.json())
       .then(data => {
@@ -37,41 +39,33 @@ export function VinylPlayer({ isMobile }: VinylPlayerProps) {
             r.trackName.startsWith("White Ferrari")
         );
         if (track?.previewUrl) {
-          previewUrlRef.current = track.previewUrl;
           const audio = new Audio();
           audio.crossOrigin = "anonymous";
-          audio.preload = "auto";
+          audio.preload = "none";
           audio.src = track.previewUrl;
           audio.addEventListener("ended", () => setIsPlaying(false));
           audioRef.current = audio;
         }
       })
       .catch(() => {});
-  }, []);
+  };
 
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (isPlaying) {
-      audio.currentTime = 0;
-      audio.play().catch(() => {});
-    } else {
-      audio.pause();
-      audio.currentTime = 0;
-    }
-  }, [isPlaying]);
-
-  useEffect(() => {
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.src = "";
+  const togglePlay = () => {
+    initAudio();
+    setIsPlaying(prev => {
+      const next = !prev;
+      const audio = audioRef.current;
+      if (!audio) return next;
+      if (next) {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      } else {
+        audio.pause();
+        audio.currentTime = 0;
       }
-    };
-  }, []);
-
-  const togglePlay = () => setIsPlaying(prev => !prev);
+      return next;
+    });
+  };
 
   return (
     <motion.div
@@ -171,7 +165,7 @@ export function VinylPlayer({ isMobile }: VinylPlayerProps) {
               }}
             >
               <img
-                src="/images/vinyl.png"
+                src="/images/vinyl.webp"
                 alt="Vinyl record"
                 width={width}
                 height={width}

@@ -45,8 +45,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${jetbrainsMono.variable} ${geistMono.variable} ${reenieBeanie.variable} ${historiaSky.variable} ${ndot55.variable}`}>
       <body>
-        <link rel="preload" href="/images/vinyl.png" as="image" />
-        <link rel="preload" href="/images/blonde.jpeg" as="image" />
+        <link rel="preload" href="/images/vinyl.webp" as="image" />
+        <link rel="preload" href="/images/blonde.webp" as="image" />
+        <link rel="preconnect" href="https://itunes.apple.com" />
+        <link rel="preconnect" href="https://audio-ssl.itunes.apple.com" />
         <ServiceWorkerRegister />
         <SmoothScrollProvider>
           <Dot color="rgba(0,0,0,0.12)" size={1.2} spacing={10} style={{ backgroundColor: "var(--color-bg)", minHeight: "100vh" }}>

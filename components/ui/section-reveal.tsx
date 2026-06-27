@@ -7,9 +7,9 @@ import { usePrefersReducedMotion } from "@/hooks/useReducedMotion"
 type VariantName = "fadeUp" | "fadeScale" | "fadeBlur"
 
 const hiddenStates: Record<VariantName, TargetAndTransition> = {
-  fadeUp: { opacity: 0, y: 40 },
-  fadeScale: { opacity: 0, scale: 0.93, y: 20 },
-  fadeBlur: { opacity: 0, scale: 0.96, y: 30, filter: "blur(6px)" },
+  fadeUp: { opacity: 0 },
+  fadeScale: { opacity: 0, scale: 0.93 },
+  fadeBlur: { opacity: 0, scale: 0.96, filter: "blur(6px)" },
 }
 
 const visibleTransition = {
@@ -37,12 +37,11 @@ export default function SectionReveal({
   const prefersReduced = usePrefersReducedMotion()
 
   const hidden = prefersReduced
-    ? { opacity: 1, y: 0, scale: 1, filter: "none" }
+    ? { opacity: 1, scale: 1, filter: "none" }
     : hiddenStates[variant]
 
   const visible: TargetAndTransition = {
     opacity: 1,
-    y: 0,
     scale: 1,
     filter: "blur(0px)",
     transition: { ...visibleTransition, delay },

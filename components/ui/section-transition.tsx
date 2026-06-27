@@ -33,7 +33,7 @@ export function SectionTransition({ children, pin = false, className, style }: S
           anticipatePin: 1,
         },
       })
-      tl.fromTo(inner, { opacity: 0, y: 60 }, { opacity: 1, y: 0, ease: "power2.out" })
+      tl.fromTo(inner, { opacity: 0 }, { opacity: 1, ease: "power2.out" })
       return () => {
         tl.scrollTrigger?.kill()
         tl.kill()
@@ -49,7 +49,7 @@ export function SectionTransition({ children, pin = false, className, style }: S
       },
     })
 
-    tl.fromTo(inner, { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0)
+    tl.fromTo(inner, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0)
 
     return () => {
       tl.scrollTrigger?.kill()
