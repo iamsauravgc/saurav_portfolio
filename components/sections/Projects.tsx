@@ -11,28 +11,28 @@ const projects: (HoverExpandItem & { tags: string[]; link: string })[] = [
     sublabel: "ML · Forex",
     image: "/images/projects/himalayan-hawala-1.png",
     tags: ["Next.js", "FastAPI", "PostgreSQL", "scikit-learn"],
-    link: "https://github.com/iamsauravgc",
+    link: "https://github.com/iamsauravgc/himalayan-hawala",
   },
   {
     label: "Paper Recommender",
     sublabel: "NLP",
     image: "/images/projects/paper-recommend.png",
     tags: ["Python", "FastAPI", "React", "NLP"],
-    link: "https://github.com/iamsauravgc",
+    link: "https://github.com/iamsauravgc/paper_recommender",
   },
   {
     label: "Economic Dashboard",
     sublabel: "Data Viz",
     image: "/images/projects/economic-dashboard.png",
     tags: ["FastAPI", "React", "PostgreSQL", "scikit-learn"],
-    link: "https://github.com/iamsauravgc",
+    link: "https://github.com/iamsauravgc/nepal-economic-dashboard",
   },
   {
     label: "Credit Risk Predictor",
     sublabel: "MLOps",
     image: "/images/projects/credit-risk-predictor.png",
     tags: ["Airflow", "scikit-learn", "MLflow", "Docker"],
-    link: "https://github.com/iamsauravgc",
+    link: "https://github.com/iamsauravgc/Credit-Card-Default-Prediction",
   },
 ]
 
